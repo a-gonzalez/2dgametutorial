@@ -6,8 +6,6 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
-//import java.lang.InterruptedException;
-
 public class Game extends JPanel implements Runnable
 {
     // screen (window) settings
@@ -25,14 +23,19 @@ public class Game extends JPanel implements Runnable
     final int WORLD_WIDTH = TILE_SIZE * WORLD_COLUMNS;
     final int WORLD_HEIGHT = TILE_SIZE * WORLD_ROWS;
 
+    // frame speed
+    final int FPS = 60;
+
     Thread thread;
+    Control control = new Control();
 
     public Game()
     {
-        setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
-        setBackground(Color.BLACK);
-        setDoubleBuffered(true); // better rendering performance for 2d games
-        setFocusable(true);
+        this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
+        this.setBackground(Color.BLACK);
+        this.setDoubleBuffered(true); // better rendering performance for 2d games
+        this.setFocusable(true);
+        this.addKeyListener(control);
     }
 
     public void setup()
@@ -46,51 +49,78 @@ public class Game extends JPanel implements Runnable
         thread.start();
     }
 
-    int x = 10;
+    int x = 100;
     int y = 20;
-    int size = 50;
+    int speed = 1;
 
     public void update()
     {
-        x += 2;
-        y += 2;
+        if (control.direction != Direction.Idle)
+        {
+            switch (control.direction)
+            {
+                case Right :
+                {
+                    x += speed; break;
+                }
+                case Left :
+                {
+                    x -= speed; break;
+                }
+                case Up :
+                {
+                    y -= speed; break;
+                }
+                case Down :
+                {
+                    y += speed; break;
+                }
+            }
+        }
     }
 
-    public void draw(Graphics graphics)
+    public void draw(Graphics2D g)
     {
-        graphics.setColor(Color.RED);
-        graphics.fillRect(x, y, size, size);
+        g.setColor(Color.RED);
+        g.fillRect(x, y, TILE_SIZE, TILE_SIZE);
+
+        g.dispose();
     }
 
     public void paintComponent(Graphics graphics)
     {
         super.paintComponent(graphics);
 
-        draw(graphics);
+        Graphics2D g = (Graphics2D) graphics;
+
+        draw(g);
     }
 
     // implemenetations
     // runnable
     @Override
-    public void run()
+    public void run() // game loop
     {
+        double interval = 1000000000 / FPS; // 1.66666 seconds
+        double delta_time = 0;
+        long previous_time = System.nanoTime();
+        long current_time = 0;
+
         while (thread != null)
         {
-            //System.out.println("Runnings...");
-            // 1 UPDATE: player, npc positions / actions data
-            update();
+            // 0 TIME: control how often events happen
+            current_time = System.nanoTime();
+            delta_time += (current_time - previous_time) / interval;
+            previous_time = current_time;
 
-            // 2 DRAW: player, npc with UPDATE data
-            repaint();
+            if (delta_time >= 1)
+            {   // 1 UPDATE: player, npc positions / actions data
+                update();
+                // 2 DRAW: player, npc with UPDATE data
+                repaint();
 
-            /*try
-            {
-                Thread.sleep(500);
+                delta_time--;
             }
-            catch (InterruptedException exception)
-            {
-                exception.printStackTrace();
-            }*/
         }
     }
 }
