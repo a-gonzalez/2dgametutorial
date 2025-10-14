@@ -5,11 +5,16 @@ import java.awt.event.KeyListener;
 
 public class Control implements KeyListener
 {
-    Direction direction = Direction.Idle;
+    private Direction direction;
 
     public Control()
     {
+        this.direction = Direction.Idle;
+    }
 
+    public Direction getDirection()
+    {
+        return direction;
     }
 
     @Override

@@ -6,6 +6,10 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
+//import java.lang.InterruptedException;
+
+import unus.entity.Player;
+
 public class Game extends JPanel implements Runnable
 {
     // screen (window) settings
@@ -28,8 +32,14 @@ public class Game extends JPanel implements Runnable
 
     Thread thread;
     Control control = new Control();
+    Player player = new Player(this.TILE_SIZE, control);
 
     public Game()
+    {
+        setup();
+    }
+
+    public void setup()
     {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(Color.BLACK);
@@ -38,51 +48,20 @@ public class Game extends JPanel implements Runnable
         this.addKeyListener(control);
     }
 
-    public void setup()
-    {
-
-    }
-
     public void start()
     {
         thread = new Thread(this);
         thread.start();
     }
 
-    int x = 100;
-    int y = 20;
-    int speed = 1;
-
     public void update()
     {
-        if (control.direction != Direction.Idle)
-        {
-            switch (control.direction)
-            {
-                case Right :
-                {
-                    x += speed; break;
-                }
-                case Left :
-                {
-                    x -= speed; break;
-                }
-                case Up :
-                {
-                    y -= speed; break;
-                }
-                case Down :
-                {
-                    y += speed; break;
-                }
-            }
-        }
+        player.update();
     }
 
     public void draw(Graphics2D g)
     {
-        g.setColor(Color.RED);
-        g.fillRect(x, y, TILE_SIZE, TILE_SIZE);
+        player.draw(g);
 
         g.dispose();
     }
@@ -94,23 +73,33 @@ public class Game extends JPanel implements Runnable
         Graphics2D g = (Graphics2D) graphics;
 
         draw(g);
+
+        g.dispose();
     }
 
     // implemenetations
     // runnable
     @Override
-    public void run() // game loop
-    {
-        double interval = 1000000000 / FPS; // 1.66666 seconds
+    public void run() // game loop - delta-time or accumulator method
+    { // 1,000,000,000 nanoseconds equals 1 second
+        double interval = 1000000000 / FPS; // 0.0166666 seconds
         double delta_time = 0;
         long previous_time = System.nanoTime();
         long current_time = 0;
+
+        // testing
+        /*long timer = 0;
+        int count = 0;*/
 
         while (thread != null)
         {
             // 0 TIME: control how often events happen
             current_time = System.nanoTime();
             delta_time += (current_time - previous_time) / interval;
+
+            // testing
+            //timer += (current_time - previous_time);
+
             previous_time = current_time;
 
             if (delta_time >= 1)
@@ -120,7 +109,51 @@ public class Game extends JPanel implements Runnable
                 repaint();
 
                 delta_time--;
+
+                //count++; // testing
             }
+
+            /*if (timer >= 1000000000)
+            { // testing
+                System.out.println(String.format("FPS: %d", count));
+
+                count = 0;
+                timer = 0;
+            }*/
         }
     }
+    /*@Override
+    public void run() // game loop - sleep method
+    {
+        double draw_interval = 1000000000 / FPS;
+        double next_draw_time = System.nanoTime() + draw_interval;
+
+        while (thread != null)
+        {
+            // 0 TIME: control how often events happen
+            
+
+            // 1 UPDATE: player, npc positions / actions data
+                update();
+                // 2 DRAW: player, npc with UPDATE data
+                repaint();
+
+            try
+            {
+                double remaining_time = (next_draw_time - System.nanoTime()) / 1000000;
+
+                if (remaining_time < 0)
+                {
+                    remaining_time = 0;
+                }
+                Thread.sleep((long) remaining_time);
+
+                next_draw_time += draw_interval;
+            }
+            catch (InterruptedException exception)
+            {
+                exception.printStackTrace();
+            }
+        }
+    }*/
 }

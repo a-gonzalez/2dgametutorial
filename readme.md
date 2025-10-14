@@ -26,3 +26,6 @@ KeyEvent
 // 72 - H
 // 73 - I
 // 74 - J
+
+System.nanoTime()
+Returns the current value of the running JVM's high-resolution time resource, in nanoseconds.
