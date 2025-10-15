@@ -41,8 +41,13 @@ public class Background
             int screen_y = world_y - game.player.world_y + game.player.screen_y;
             int tile = map[column][row];
 
-            g2d.drawImage(tiles[tile].image, screen_x, screen_y, game.TILE_SIZE, game.TILE_SIZE, null);
-
+            if (world_x + game.TILE_SIZE > game.player.world_x - game.player.screen_x &&
+                world_x - game.TILE_SIZE < game.player.world_x + game.player.screen_x &&
+                world_y + game.TILE_SIZE > game.player.world_y - game.player.screen_y &&
+                world_y - game.TILE_SIZE < game.player.world_y + game.player.screen_y)
+            { // let's only draw tile which are visible on screen
+                g2d.drawImage(tiles[tile].image, screen_x, screen_y, game.TILE_SIZE, game.TILE_SIZE, null);
+            }
             column++;
 
             if (column == game.WORLD_COLUMNS)
