@@ -10,6 +10,7 @@ import java.awt.Graphics2D;
 
 import unus.entity.Player;
 import unus.tile.Background;
+import unus.item.*;
 
 public class Game extends JPanel implements Runnable
 {
@@ -34,21 +35,28 @@ public class Game extends JPanel implements Runnable
     Thread thread;
     public Bump bump = new Bump(this);
     Control control = new Control();
+    public Assets assets = new Assets(this);
     Background background = new Background(this);
     public Player player = new Player(control, this);
+    public Item[] items = new Item[10];
 
     public Game()
     {
-        setup();
+        initialize();
     }
 
-    public void setup()
+    public void initialize()
     {
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true); // better rendering performance for 2d games
         this.setFocusable(true);
         this.addKeyListener(control);
+    }
+
+    public void setup()
+    {
+        assets.setItems();
     }
 
     public void start()
@@ -65,6 +73,14 @@ public class Game extends JPanel implements Runnable
     public void draw(Graphics2D g)
     {
         background.draw(g);
+
+        for (int index = 0; index < items.length; index++)
+        {
+            if (items[index] != null)
+            {
+                items[index].draw(g);
+            }
+        }
         player.draw(g);
 
         g.dispose();

@@ -192,6 +192,6 @@ public class Player extends Entity
         }
         g2d.drawImage(image, screen_x, screen_y, game.TILE_SIZE, game.TILE_SIZE, null);
         g2d.setColor(Color.GREEN);
-        g2d.drawRect(screen_x + 8, screen_y + 16, hitbox.width, hitbox.height);
+        g2d.drawRect(screen_x + hitbox.x, screen_y + hitbox.y, hitbox.width, hitbox.height);
     }
 }

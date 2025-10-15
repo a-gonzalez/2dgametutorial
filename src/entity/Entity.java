@@ -9,6 +9,8 @@ public class Entity
 {
     public int world_x; 
     public int world_y;
+    public int hitbox_default_x;
+    public int hitbox_default_y;
     int speed;
     int sprite_counter = 0;
     int sprite_number = 1;
@@ -20,12 +22,6 @@ public class Entity
     
     public Entity()
     {
-        initialize();
-    }
-
-    private void initialize()
-    {
-
     }
 
     public int getSpeed()

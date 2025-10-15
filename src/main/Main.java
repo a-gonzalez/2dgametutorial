@@ -17,6 +17,7 @@ public class Main
         frame.pack();
 
         game.requestFocus();
+        game.setup();
         game.start();
 
         frame.setVisible(true);
