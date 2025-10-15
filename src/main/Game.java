@@ -9,6 +9,7 @@ import java.awt.Graphics2D;
 //import java.lang.InterruptedException;
 
 import unus.entity.Player;
+import unus.tile.Background;
 
 public class Game extends JPanel implements Runnable
 {
@@ -32,6 +33,7 @@ public class Game extends JPanel implements Runnable
 
     Thread thread;
     Control control = new Control();
+    Background background = new Background(this.TILE_SIZE, this.SCREEN_ROWS, this.SCREEN_COLUMNS);
     Player player = new Player(this.TILE_SIZE, control);
 
     public Game()
@@ -61,6 +63,7 @@ public class Game extends JPanel implements Runnable
 
     public void draw(Graphics2D g)
     {
+        background.draw(g);
         player.draw(g);
 
         g.dispose();
