@@ -6,8 +6,8 @@ import unus.main.Direction;
 
 public class Entity
 {
-    int x; 
-    int y;
+    public int world_x; 
+    public int world_y;
     int width;
     int height;
     int speed;

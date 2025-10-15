@@ -5,23 +5,29 @@ import java.io.IOException;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
-
-
 import unus.main.*;
 
 public class Player extends Entity
 {
+    public final int screen_x;
+    public final int screen_y;
     //private Game game;
     private Control control;
-
     private int tile_size;
+    private int screen_width;
+    private int screen_height;
 
-    public Player(int tile_size, Control control)
+    public Player(Control control, int tile_size, int screen_width, int screen_height)
     {
         super();
 
+        this.control = control; // keyboard listener for movement
         this.tile_size = tile_size;
-        this.control = control;
+        this.screen_width = screen_width;
+        this.screen_height = screen_height;
+
+        this.screen_x = (this.screen_width / 2) - (this.tile_size / 2);
+        this.screen_y = (this.screen_height / 2) - (this.tile_size / 2);
 
         setup();
         getImages();
@@ -29,8 +35,8 @@ public class Player extends Entity
 
     public void setup()
     {
-        this.x = 100;
-        this.y = 100;
+        this.world_x = tile_size * 23;
+        this.world_y = tile_size * 21;
         this.speed = 3;
         this.direction = Direction.Down;
     }
@@ -66,19 +72,19 @@ public class Player extends Entity
             {
                 case Right :
                 {
-                    x += speed; break;
+                    world_x += speed; break;
                 }
                 case Left :
                 {
-                    x -= speed; break;
+                    world_x -= speed; break;
                 }
                 case Up :
                 {
-                    y -= speed; break;
+                    world_y -= speed; break;
                 }
                 case Down :
                 {
-                    y += speed; break;
+                    world_y += speed; break;
                 }
             }
             sprite_counter++;
@@ -158,6 +164,6 @@ public class Player extends Entity
                 }
             }
         }
-        g2d.drawImage(image, x, y, tile_size, tile_size, null);
+        g2d.drawImage(image, screen_x, screen_y, tile_size, tile_size, null);
     }
 }

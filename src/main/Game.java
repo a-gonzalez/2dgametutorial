@@ -16,15 +16,15 @@ public class Game extends JPanel implements Runnable
     // screen (window) settings
     final int TILE_SIZE_ORIGINAL = 16;
     final int SCALE = 3;
-    final int TILE_SIZE = TILE_SIZE_ORIGINAL * SCALE;
+    public final int TILE_SIZE = TILE_SIZE_ORIGINAL * SCALE;
     final int SCREEN_COLUMNS = 16;
     final int SCREEN_ROWS = 12;
     final int SCREEN_WIDTH = TILE_SIZE * SCREEN_COLUMNS;
     final int SCREEN_HEIGHT = TILE_SIZE * SCREEN_ROWS;
 
     // world settings
-    final int WORLD_COLUMNS = 50;
-    final int WORLD_ROWS = 50;
+    public final int WORLD_COLUMNS = 50;
+    public final int WORLD_ROWS = 50;
     final int WORLD_WIDTH = TILE_SIZE * WORLD_COLUMNS;
     final int WORLD_HEIGHT = TILE_SIZE * WORLD_ROWS;
 
@@ -33,8 +33,8 @@ public class Game extends JPanel implements Runnable
 
     Thread thread;
     Control control = new Control();
-    Background background = new Background(this.TILE_SIZE, this.SCREEN_ROWS, this.SCREEN_COLUMNS);
-    Player player = new Player(this.TILE_SIZE, control);
+    Background background = new Background(this);
+    public Player player = new Player(control, this.TILE_SIZE, this.SCREEN_WIDTH, this.SCREEN_HEIGHT);
 
     public Game()
     {

@@ -7,55 +7,50 @@ import java.io.InputStreamReader;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 
+import unus.main.Game;
+
 public class Background
 { // this class will manage the tiles that comprise the background
     Tile[] tiles;
+    Game game;
     int tile_size;
-    int rows;
-    int columns;
 
     int map[][];
 
-    public Background(int tile_size, int rows, int columns)
+    public Background(Game game)
     {
-        this.rows = rows;
-        this.columns = columns;
-        this.tile_size = tile_size;
-        this.map = new int[columns][rows];
+        this.game = game;
+        this.map = new int[game.WORLD_COLUMNS][game.WORLD_ROWS];
 
         tiles = new Tile[10];
 
         getImages();
-        getMap("/resources/data/maps/001.dat");
+        getMap("/resources/data/maps/003.dat");
     }
 
     public void draw(Graphics2D g2d)
     {
         int column = 0;
         int row = 0;
-        int x = 0;
-        int y = 0;
 
-        while (column < columns && row < rows)
+        while (column < game.WORLD_COLUMNS && row < game.WORLD_ROWS)
         {
+            int world_x = column * game.TILE_SIZE;
+            int world_y = row * game.TILE_SIZE;
+            int screen_x = world_x - game.player.world_x + game.player.screen_x;
+            int screen_y = world_y - game.player.world_y + game.player.screen_y;
             int tile = map[column][row];
 
-            g2d.drawImage(tiles[tile].image, x, y, tile_size, tile_size, null);
+            g2d.drawImage(tiles[tile].image, screen_x, screen_y, game.TILE_SIZE, game.TILE_SIZE, null);
 
             column++;
-            x += tile_size;
 
-            if (column == columns)
+            if (column == game.WORLD_COLUMNS)
             {
                 column = 0;
-                x = 0;
                 row++;
-                y += tile_size;
             }
         }
-        /*g2d.drawImage(tiles[0].image, 0, 0, tile_size, tile_size, null);
-        g2d.drawImage(tiles[1].image, 48, 0, tile_size, tile_size, null);
-        g2d.drawImage(tiles[2].image, 96, 0, tile_size, tile_size, null);*/
     }
 
     private void getImages()
@@ -68,6 +63,12 @@ public class Background
             tiles[1].image = ImageIO.read(getClass().getResourceAsStream("/resources/image/tile/wall.png"));
             tiles[2] = new Tile();
             tiles[2].image = ImageIO.read(getClass().getResourceAsStream("/resources/image/tile/water00.png"));
+            tiles[3] = new Tile();
+            tiles[3].image = ImageIO.read(getClass().getResourceAsStream("/resources/image/tile/dirt.png"));
+            tiles[4] = new Tile();
+            tiles[4].image = ImageIO.read(getClass().getResourceAsStream("/resources/image/tile/tree.png"));
+            tiles[5] = new Tile();
+            tiles[5].image = ImageIO.read(getClass().getResourceAsStream("/resources/image/tile/road00.png"));
 
         }
         catch (IOException exception)
@@ -86,11 +87,11 @@ public class Background
             int column = 0;
             int row = 0;
 
-            while (column < columns && row < rows)
+            while (column < game.WORLD_COLUMNS && row < game.WORLD_ROWS)
             {
                 String line = reader.readLine();
 
-                while (column < columns)
+                while (column < game.WORLD_COLUMNS)
                 {
                     String numbers[] = line.split(" ");
 
@@ -100,7 +101,7 @@ public class Background
 
                     column++;
                 }
-                if (column == columns)
+                if (column == game.WORLD_COLUMNS)
                 {
                     column = 0;
                     row++;
