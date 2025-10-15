@@ -8,11 +8,13 @@ import java.awt.Rectangle;
 import javax.imageio.ImageIO;
 
 import unus.main.*;
+import unus.item.*;
 
 public class Player extends Entity
 {
     public final int screen_x;
     public final int screen_y;
+    public int keys;
     private Game game;
     private Control control;
 
@@ -27,6 +29,8 @@ public class Player extends Entity
         this.screen_y = (game.SCREEN_HEIGHT / 2) - (game.TILE_SIZE / 2);
 
         hitbox = new Rectangle(8, 16, 32, 32);
+        hitbox_default_x = hitbox.x;
+        hitbox_default_y = hitbox.y;
 
         setup();
         getImages();
@@ -57,6 +61,53 @@ public class Player extends Entity
         {
             exception.printStackTrace();
         }
+    }
+
+    public void grabItem(int index)
+    {
+        Type type = game.items[index].type;
+
+        switch (type)
+        {
+            case Key :
+            {
+                keys++;
+                game.items[index] = null;
+
+                break;
+            }
+            case Boot :
+            {
+                speed += 2;
+                game.items[index] = null;
+
+                break;
+            }
+            case IronDoor :
+            {
+                if (keys > 0)
+                {
+                    game.items[index] = null;
+                    keys--;
+                }
+
+                break;
+            }
+            case Chest :
+            {
+                if (keys > 0)
+                {
+                    Item open_chest = new OpenedChest(game);
+                    open_chest.world_x = game.items[index].world_x;
+                    open_chest.world_y = game.items[index].world_y;
+
+                    game.items[index] = open_chest;
+
+                    keys--;
+                }
+            }
+        }
+
     }
 
     public void update()
@@ -90,6 +141,14 @@ public class Player extends Entity
 
             // check solid tile collision
             game.bump.checkTile(this);
+
+            // check item collision
+            int index = game.bump.checkItem(this, true);
+
+            if (index != 999)
+            {
+                grabItem(index);
+            }
 
             if (collision == false)
             { // if no collision, player can move

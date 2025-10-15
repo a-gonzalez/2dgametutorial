@@ -11,6 +11,106 @@ public class Bump
         this.game = game;
     }
 
+    public int checkItem(Entity entity, boolean player)
+    {
+        int result = 999;
+
+        for (int index = 0; index < game.items.length; index++)
+        {
+            if (game.items[index] != null)
+            { // get entity's hitbox position
+                entity.hitbox.x = entity.world_x + entity.hitbox.x;
+                entity.hitbox.y = entity.world_y + entity.hitbox.y;
+
+                // get the item's hitbox position
+                game.items[index].hitbox.x = game.items[index].world_x + game.items[index].hitbox.x;
+                game.items[index].hitbox.y = game.items[index].world_y + game.items[index].hitbox.y;
+
+                switch (entity.direction)
+                { // simulating entiry's movement and check where it will be after it moves
+                    case Up :
+                    {
+                        entity.hitbox.y -= entity.getSpeed();
+
+                        if (entity.hitbox.intersects(game.items[index].hitbox))
+                        {
+                            if (game.items[index].solid)
+                            {
+                                entity.collision = true;
+                            }
+
+                            if (player)
+                            { // make sure only the player is interacting with items
+                                result = index;
+                            }
+                        }
+                        break;
+                    }
+                    case Down :
+                    {
+                        entity.hitbox.y += entity.getSpeed();
+
+                        if (entity.hitbox.intersects(game.items[index].hitbox))
+                        {
+                            if (game.items[index].solid)
+                            {
+                                entity.collision = true;
+                            }
+
+                            if (player)
+                            { // make sure only the player interacts with items
+                                result = index;
+                            }
+                        }
+                        break;
+                    }
+                    case Right :
+                    {
+                        entity.hitbox.x += entity.getSpeed();
+
+                        if (entity.hitbox.intersects(game.items[index].hitbox))
+                        {
+                            if (game.items[index].solid)
+                            {
+                                entity.collision = true;
+                            }
+
+                            if (player)
+                            { // make sure only the player is interacting with items
+                                result = index;
+                            }
+                        }
+                        break;
+                    }
+                    case Left :
+                    {
+                        entity.hitbox.x -= entity.getSpeed();
+                        
+                        if (entity.hitbox.intersects(game.items[index].hitbox))
+                        {
+                            if (game.items[index].solid)
+                            {
+                                entity.collision = true;
+                            }
+
+                            if (player)
+                            { // make sure only the player is interacting with items
+                                result = index;
+                            }
+                        }
+                        break;
+                    }
+                } // reset values after check
+                entity.hitbox.x = entity.hitbox_default_x;
+                entity.hitbox.y = entity.hitbox_default_y;
+
+                game.items[index].hitbox.x = game.items[index].hitbox_default_x;
+                game.items[index].hitbox.y = game.items[index].hitbox_default_y;
+            }
+        }
+        return result;
+    }
+
     public void checkTile(Entity entity)
     {
         int left_world_x = entity.world_x + entity.hitbox.x;

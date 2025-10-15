@@ -19,10 +19,6 @@ public class Entity
     public Direction direction;
     public Rectangle hitbox;
     public boolean collision = false;
-    
-    public Entity()
-    {
-    }
 
     public int getSpeed()
     {

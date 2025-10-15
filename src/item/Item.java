@@ -12,7 +12,10 @@ public class Item
     public Rectangle hitbox;
     public Type type;
     public boolean solid;
-    public int world_x, world_y;
+    public int world_x;
+    public int world_y;
+    public int hitbox_default_x;
+    public int hitbox_default_y;
 
     private Game game;
 
@@ -21,6 +24,8 @@ public class Item
         this.game = game;
         this.solid = false;
         this.hitbox = new Rectangle(0, 0, game.TILE_SIZE, game.TILE_SIZE);
+        this.hitbox_default_x = 0;
+        this.hitbox_default_y = 0;
     }
 
     public void draw(Graphics2D g2d)
