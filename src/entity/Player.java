@@ -4,30 +4,29 @@ import java.awt.Color;
 import java.io.IOException;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.awt.Rectangle;
 import javax.imageio.ImageIO;
+
 import unus.main.*;
 
 public class Player extends Entity
 {
     public final int screen_x;
     public final int screen_y;
-    //private Game game;
+    private Game game;
     private Control control;
-    private int tile_size;
-    private int screen_width;
-    private int screen_height;
 
-    public Player(Control control, int tile_size, int screen_width, int screen_height)
+    public Player(Control control, Game game)
     {
         super();
 
         this.control = control; // keyboard listener for movement
-        this.tile_size = tile_size;
-        this.screen_width = screen_width;
-        this.screen_height = screen_height;
+        this.game = game;
 
-        this.screen_x = (this.screen_width / 2) - (this.tile_size / 2);
-        this.screen_y = (this.screen_height / 2) - (this.tile_size / 2);
+        this.screen_x = (game.SCREEN_WIDTH / 2) - (game.TILE_SIZE / 2);
+        this.screen_y = (game.SCREEN_HEIGHT / 2) - (game.TILE_SIZE / 2);
+
+        hitbox = new Rectangle(8, 16, 32, 32);
 
         setup();
         getImages();
@@ -35,8 +34,8 @@ public class Player extends Entity
 
     public void setup()
     {
-        this.world_x = tile_size * 23;
-        this.world_y = tile_size * 21;
+        this.world_x = game.TILE_SIZE * 23;
+        this.world_y = game.TILE_SIZE * 21;
         this.speed = 3;
         this.direction = Direction.Down;
     }
@@ -68,7 +67,7 @@ public class Player extends Entity
         {
             this.direction = direction;
 
-            switch (direction)
+            /*switch (direction)
             {
                 case Right :
                 {
@@ -85,6 +84,33 @@ public class Player extends Entity
                 case Down :
                 {
                     world_y += speed; break;
+                }
+            }*/
+            collision = false;
+
+            // check solid tile collision
+            game.bump.checkTile(this);
+
+            if (collision == false)
+            { // if no collision, player can move
+                switch (this.direction)
+                {
+                    case Right :
+                    {
+                        world_x += speed; break;
+                    }
+                    case Left :
+                    {
+                        world_x -= speed; break;
+                    }
+                    case Up :
+                    {
+                        world_y -= speed; break;
+                    }
+                    case Down :
+                    {
+                        world_y += speed; break;
+                    }
                 }
             }
             sprite_counter++;
@@ -164,6 +190,8 @@ public class Player extends Entity
                 }
             }
         }
-        g2d.drawImage(image, screen_x, screen_y, tile_size, tile_size, null);
+        g2d.drawImage(image, screen_x, screen_y, game.TILE_SIZE, game.TILE_SIZE, null);
+        g2d.setColor(Color.GREEN);
+        g2d.drawRect(screen_x + 8, screen_y + 16, hitbox.width, hitbox.height);
     }
 }

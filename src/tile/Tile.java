@@ -5,10 +5,15 @@ import java.awt.image.BufferedImage;
 public class Tile
 {
     BufferedImage image;
-    boolean solid = false;
+    boolean solid;
 
     public Tile()
     {
+        solid = false;
+    }
 
+    public boolean isSolid()
+    {
+        return solid;
     }
 }

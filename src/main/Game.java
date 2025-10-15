@@ -19,8 +19,8 @@ public class Game extends JPanel implements Runnable
     public final int TILE_SIZE = TILE_SIZE_ORIGINAL * SCALE;
     final int SCREEN_COLUMNS = 16;
     final int SCREEN_ROWS = 12;
-    final int SCREEN_WIDTH = TILE_SIZE * SCREEN_COLUMNS;
-    final int SCREEN_HEIGHT = TILE_SIZE * SCREEN_ROWS;
+    public final int SCREEN_WIDTH = TILE_SIZE * SCREEN_COLUMNS;
+    public final int SCREEN_HEIGHT = TILE_SIZE * SCREEN_ROWS;
 
     // world settings
     public final int WORLD_COLUMNS = 50;
@@ -32,9 +32,10 @@ public class Game extends JPanel implements Runnable
     final int FPS = 60;
 
     Thread thread;
+    public Bump bump = new Bump(this);
     Control control = new Control();
     Background background = new Background(this);
-    public Player player = new Player(control, this.TILE_SIZE, this.SCREEN_WIDTH, this.SCREEN_HEIGHT);
+    public Player player = new Player(control, this);
 
     public Game()
     {

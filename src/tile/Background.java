@@ -11,11 +11,11 @@ import unus.main.Game;
 
 public class Background
 { // this class will manage the tiles that comprise the background
-    Tile[] tiles;
+    public Tile[] tiles;
     Game game;
     int tile_size;
 
-    int map[][];
+    public int map[][];
 
     public Background(Game game)
     {
@@ -27,6 +27,11 @@ public class Background
         getImages();
         getMap("/resources/data/maps/003.dat");
     }
+
+    /*public int[][] getMap()
+    {
+        return map;
+    }*/
 
     public void draw(Graphics2D g2d)
     {
@@ -64,17 +69,24 @@ public class Background
         {
             tiles[0] = new Tile();
             tiles[0].image = ImageIO.read(getClass().getResourceAsStream("/resources/image/tile/grass00.png"));
+
             tiles[1] = new Tile();
             tiles[1].image = ImageIO.read(getClass().getResourceAsStream("/resources/image/tile/wall.png"));
+            tiles[1].solid = true;
+
             tiles[2] = new Tile();
             tiles[2].image = ImageIO.read(getClass().getResourceAsStream("/resources/image/tile/water00.png"));
+            tiles[2].solid = true;
+
             tiles[3] = new Tile();
             tiles[3].image = ImageIO.read(getClass().getResourceAsStream("/resources/image/tile/dirt.png"));
+
             tiles[4] = new Tile();
             tiles[4].image = ImageIO.read(getClass().getResourceAsStream("/resources/image/tile/tree.png"));
+            tiles[4].solid = true;
+
             tiles[5] = new Tile();
             tiles[5].image = ImageIO.read(getClass().getResourceAsStream("/resources/image/tile/road00.png"));
-
         }
         catch (IOException exception)
         {
