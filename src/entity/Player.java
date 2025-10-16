@@ -14,7 +14,7 @@ public class Player extends Entity
 {
     public final int screen_x;
     public final int screen_y;
-    public int keys;
+    public int keys = 5;
     private Game game;
     private Control control;
 
@@ -73,13 +73,17 @@ public class Player extends Entity
             {
                 keys++;
                 game.items[index] = null;
+                game.playSE(1);
+                game.ui.displayMessage("You found a key!");
 
                 break;
             }
             case Boot :
             {
-                speed += 2;
+                speed += 1;
                 game.items[index] = null;
+                game.playSE(3);
+                game.ui.displayMessage("Your speed has increased!");
 
                 break;
             }
@@ -89,22 +93,42 @@ public class Player extends Entity
                 {
                     game.items[index] = null;
                     keys--;
-                }
 
+                    game.playSE(5);
+
+                    game.ui.displayMessage("The door has been opened.");
+                }
+                else
+                {
+                    game.ui.displayMessage("You need a key for this door.");
+                }
                 break;
             }
             case Chest :
             {
                 if (keys > 0)
                 {
-                    Item open_chest = new OpenedChest(game);
+                    /*Item open_chest = new OpenedChest(game);
                     open_chest.world_x = game.items[index].world_x;
                     open_chest.world_y = game.items[index].world_y;
 
-                    game.items[index] = open_chest;
+                    game.items[index] = open_chest;*/
+                    game.items[index] = null;
 
                     keys--;
+
+                    game.playSE(2);
+
+                    game.ui.displayMessage("You opened the chest.");
+                    game.ui.game_complete = true;
+                    game.stopMusic();
+                    game.playSE(4);
                 }
+                /*else
+                {
+                    game.ui.displayMessage("You need a key for this chest.");
+                }*/
+                break;
             }
         }
 

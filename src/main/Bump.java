@@ -1,6 +1,7 @@
 package unus.main;
 
 import unus.entity.Entity;
+import unus.item.OpenedChest;
 
 public class Bump
 {
@@ -34,7 +35,7 @@ public class Bump
 
                         if (entity.hitbox.intersects(game.items[index].hitbox))
                         {
-                            if (game.items[index].solid)
+                            if (game.items[index].solid/* && game.items[index].getClass() != OpenedChest.class*/)
                             {
                                 entity.collision = true;
                             }

@@ -23,8 +23,8 @@ public class Assets
         game.items[1].world_y = 40 * game.TILE_SIZE;
 
         game.items[2] = new Boot(game);
-        game.items[2].world_x = 35 * game.TILE_SIZE;
-        game.items[2].world_y = 42 * game.TILE_SIZE;
+        game.items[2].world_x = 36 * game.TILE_SIZE;
+        game.items[2].world_y = 41 * game.TILE_SIZE;
 
         /*game.items[3] = new Door(game);
         game.items[3].world_x = 10 * game.TILE_SIZE;

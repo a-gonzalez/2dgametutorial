@@ -26,17 +26,21 @@ public class Game extends JPanel implements Runnable
     // world settings
     public final int WORLD_COLUMNS = 50;
     public final int WORLD_ROWS = 50;
-    final int WORLD_WIDTH = TILE_SIZE * WORLD_COLUMNS;
-    final int WORLD_HEIGHT = TILE_SIZE * WORLD_ROWS;
+    //final int WORLD_WIDTH = TILE_SIZE * WORLD_COLUMNS;
+    //final int WORLD_HEIGHT = TILE_SIZE * WORLD_ROWS;
 
     // frame speed
     final int FPS = 60;
 
     Thread thread;
-    public Bump bump = new Bump(this);
+    
     Control control = new Control();
-    public Assets assets = new Assets(this);
+    Sound music = new Sound();
+    Sound se = new Sound();
     Background background = new Background(this);
+    public UI ui = new UI(this);
+    public Assets assets = new Assets(this);
+    public Bump bump = new Bump(this);
     public Player player = new Player(control, this);
     public Item[] items = new Item[10];
 
@@ -57,12 +61,32 @@ public class Game extends JPanel implements Runnable
     public void setup()
     {
         assets.setItems();
+
+        playMusic(0);
     }
 
     public void start()
     {
         thread = new Thread(this);
         thread.start();
+    }
+
+    public void playMusic(int index)
+    {
+        music.setSound(index);
+        music.play();
+        music.loop();
+    }
+
+    public void stopMusic()
+    {
+        music.stop();
+    }
+
+    public void playSE(int index)
+    {
+        se.setSound(index);
+        se.play();
     }
 
     public void update()
@@ -82,6 +106,7 @@ public class Game extends JPanel implements Runnable
             }
         }
         player.draw(g);
+        ui.draw(g);
 
         g.dispose();
     }
