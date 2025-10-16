@@ -19,6 +19,7 @@ public class Player extends Entity
     private Control control;
 
     private int idle_counter = 0;
+    //private int pixel_counter = 0;
 
     public Player(Control control, Game game)
     {
@@ -42,7 +43,7 @@ public class Player extends Entity
     {
         this.world_x = game.TILE_SIZE * 23;
         this.world_y = game.TILE_SIZE * 21;
-        this.speed = 3;
+        this.speed = 4;
         this.direction = Direction.Down;
     }
 
@@ -212,6 +213,14 @@ public class Player extends Entity
                 }
                 sprite_counter = 0;
             }
+            /*pixel_counter += speed;
+
+            if (pixel_counter == 46)
+            {
+                direction = Direction.Idle;
+
+                pixel_counter = 0;
+            }*/
         }
         else
         {
@@ -227,8 +236,6 @@ public class Player extends Entity
 
     public void draw(Graphics2D g2d)
     {
-        /*g2d.setColor(Color.RED);
-        g2d.fillRect(x, y, tile_size, tile_size);*/
         BufferedImage image = null;
 
         switch (direction)
