@@ -22,6 +22,7 @@ public class Key extends Item
         try
         {
             this.image = ImageIO.read(getClass().getResourceAsStream("/resources/image/item/key.png"));
+            util.scale(image, game.TILE_SIZE, game.TILE_SIZE);
         }
         catch (IOException exception)
         {

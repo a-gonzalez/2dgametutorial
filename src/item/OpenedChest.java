@@ -22,6 +22,7 @@ public class OpenedChest extends Item
         try
         {
             this.image = ImageIO.read(getClass().getResourceAsStream("/resources/image/item/chest_opened.png"));
+            util.scale(image, game.TILE_SIZE, game.TILE_SIZE);
         }
         catch (IOException exception)
         {

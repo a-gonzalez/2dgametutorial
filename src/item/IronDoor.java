@@ -22,6 +22,7 @@ public class IronDoor extends Item
         try
         {
             this.image = ImageIO.read(getClass().getResourceAsStream("/resources/image/item/door_iron.png"));
+            util.scale(image, game.TILE_SIZE, game.TILE_SIZE);
         }
         catch (IOException exception)
         {

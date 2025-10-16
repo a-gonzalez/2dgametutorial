@@ -8,6 +8,7 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 import unus.main.Game;
+import unus.main.Utility;
 
 public class Background
 { // this class will manage the tiles that comprise the background
@@ -28,10 +29,26 @@ public class Background
         getMap("/resources/data/maps/003.dat");
     }
 
-    /*public int[][] getMap()
+    public void setup(int index, String name, boolean solid)
     {
-        return map;
-    }*/
+        Utility util = new Utility();
+
+        try
+        {
+            tiles[index] = new Tile();
+            tiles[index].image = ImageIO.read(getClass().getResourceAsStream(String.format("/resources/image/tile/%s.png", name)));
+            tiles[index].image = util.scale(tiles[index].image, game.TILE_SIZE, game.TILE_SIZE);
+            tiles[index].solid = solid;
+        }
+        catch (IOException exception)
+        {
+            exception.printStackTrace();
+        }
+        finally
+        {
+            util = null;
+        }
+    }
 
     public void draw(Graphics2D g2d)
     {
@@ -51,7 +68,8 @@ public class Background
                 world_y + game.TILE_SIZE > game.player.world_y - game.player.screen_y &&
                 world_y - game.TILE_SIZE < game.player.world_y + game.player.screen_y)
             { // let's only draw tile which are visible on screen
-                g2d.drawImage(tiles[tile].image, screen_x, screen_y, game.TILE_SIZE, game.TILE_SIZE, null);
+                //g2d.drawImage(tiles[tile].image, screen_x, screen_y, game.TILE_SIZE, game.TILE_SIZE, null);
+                g2d.drawImage(tiles[tile].image, screen_x, screen_y, null);
             }
             column++;
 
@@ -65,33 +83,12 @@ public class Background
 
     private void getImages()
     {
-        try
-        {
-            tiles[0] = new Tile();
-            tiles[0].image = ImageIO.read(getClass().getResourceAsStream("/resources/image/tile/grass00.png"));
-
-            tiles[1] = new Tile();
-            tiles[1].image = ImageIO.read(getClass().getResourceAsStream("/resources/image/tile/wall.png"));
-            tiles[1].solid = true;
-
-            tiles[2] = new Tile();
-            tiles[2].image = ImageIO.read(getClass().getResourceAsStream("/resources/image/tile/water00.png"));
-            tiles[2].solid = true;
-
-            tiles[3] = new Tile();
-            tiles[3].image = ImageIO.read(getClass().getResourceAsStream("/resources/image/tile/dirt.png"));
-
-            tiles[4] = new Tile();
-            tiles[4].image = ImageIO.read(getClass().getResourceAsStream("/resources/image/tile/tree.png"));
-            tiles[4].solid = true;
-
-            tiles[5] = new Tile();
-            tiles[5].image = ImageIO.read(getClass().getResourceAsStream("/resources/image/tile/road00.png"));
-        }
-        catch (IOException exception)
-        {
-            exception.printStackTrace();
-        }
+        setup(0, "grass00", false);
+        setup(1, "wall", true);
+        setup(2, "water00", true);
+        setup(3, "dirt", false);
+        setup(4, "tree", true);
+        setup(5, "road00", false);
     }
 
     private void getMap(String path)

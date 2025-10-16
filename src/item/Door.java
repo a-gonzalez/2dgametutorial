@@ -22,6 +22,7 @@ public class Door extends Item
         try
         {
             this.image = ImageIO.read(getClass().getResourceAsStream("/resources/image/item/door.png"));
+            util.scale(image, game.TILE_SIZE, game.TILE_SIZE);
         }
         catch (IOException exception)
         {

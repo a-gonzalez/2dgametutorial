@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.awt.Rectangle;
 
 import unus.main.Game;
+import unus.main.Utility;
 
 public class Item
 {
@@ -17,7 +18,8 @@ public class Item
     public int hitbox_default_x;
     public int hitbox_default_y;
 
-    private Game game;
+    public Game game;
+    public Utility util = new Utility();
 
     public Item(Game game)
     {

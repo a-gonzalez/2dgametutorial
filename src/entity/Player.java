@@ -35,11 +35,11 @@ public class Player extends Entity
         hitbox_default_x = hitbox.x;
         hitbox_default_y = hitbox.y;
 
-        setup();
+        initialize();
         getImages();
     }
 
-    public void setup()
+    public void initialize()
     {
         this.world_x = game.TILE_SIZE * 23;
         this.world_y = game.TILE_SIZE * 21;
@@ -47,23 +47,33 @@ public class Player extends Entity
         this.direction = Direction.Down;
     }
 
-    public void getImages()
+    private BufferedImage setup(String name)
     {
+        Utility util = new Utility();
+        BufferedImage image = null;
+
         try
         {
-            up0 = ImageIO.read(getClass().getResourceAsStream("/resources/image/player/up0.png"));
-            up1 = ImageIO.read(getClass().getResourceAsStream("/resources/image/player/up1.png"));
-            down0 = ImageIO.read(getClass().getResourceAsStream("/resources/image/player/down0.png"));
-            down1 = ImageIO.read(getClass().getResourceAsStream("/resources/image/player/down1.png"));
-            right0 = ImageIO.read(getClass().getResourceAsStream("/resources/image/player/right0.png"));
-            right1 = ImageIO.read(getClass().getResourceAsStream("/resources/image/player/right1.png"));
-            left0 = ImageIO.read(getClass().getResourceAsStream("/resources/image/player/left0.png"));
-            left1 = ImageIO.read(getClass().getResourceAsStream("/resources/image/player/left1.png"));
+            image = ImageIO.read(getClass().getResourceAsStream(String.format("/resources/image/player/%s.png", name)));
+            image = util.scale(image, game.TILE_SIZE, game.TILE_SIZE);
         }
         catch (IOException exception)
         {
             exception.printStackTrace();
         }
+        return image;
+    }
+
+    public void getImages()
+    {
+        up0 = setup("up0");
+        up1 = setup("up1");
+        down0 = setup("down0");
+        down1 = setup("down1");
+        right0 = setup("right0");
+        right1 = setup("right1");
+        left0 = setup("left0");
+        left1 = setup("left1");
     }
 
     public void grabItem(int index)
@@ -292,7 +302,7 @@ public class Player extends Entity
                 }
             }
         }
-        g2d.drawImage(image, screen_x, screen_y, game.TILE_SIZE, game.TILE_SIZE, null);
+        g2d.drawImage(image, screen_x, screen_y, null);
         g2d.setColor(Color.GREEN);
         g2d.drawRect(screen_x + hitbox.x, screen_y + hitbox.y, hitbox.width, hitbox.height);
     }

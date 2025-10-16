@@ -96,6 +96,10 @@ public class Game extends JPanel implements Runnable
 
     public void draw(Graphics2D g)
     {
+        // DEBUG = how long does it take to draw images?
+        /*long start = System.nanoTime();
+        long end = 0;*/
+
         background.draw(g);
 
         for (int index = 0; index < items.length; index++)
@@ -107,6 +111,12 @@ public class Game extends JPanel implements Runnable
         }
         player.draw(g);
         ui.draw(g);
+
+        /*end = System.nanoTime();
+        long elapsed = end - start;
+
+        g.drawString(String.format("Draw Time: %d", elapsed), 100, 100);
+        System.out.println(String.format("Draw Time: %d", elapsed));*/
 
         g.dispose();
     }
