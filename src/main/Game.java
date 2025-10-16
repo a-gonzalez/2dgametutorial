@@ -62,7 +62,7 @@ public class Game extends JPanel implements Runnable
     {
         assets.setItems();
 
-        playMusic(0);
+        //playMusic(0);
     }
 
     public void start()

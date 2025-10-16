@@ -18,6 +18,8 @@ public class Player extends Entity
     private Game game;
     private Control control;
 
+    private int idle_counter = 0;
+
     public Player(Control control, Game game)
     {
         super();
@@ -121,8 +123,8 @@ public class Player extends Entity
 
                     game.ui.displayMessage("You opened the chest.");
                     game.ui.game_complete = true;
-                    game.stopMusic();
-                    game.playSE(4);
+                    //game.stopMusic();
+                    //game.playSE(4);
                 }
                 /*else
                 {
@@ -209,6 +211,16 @@ public class Player extends Entity
                     sprite_number = 0;
                 }
                 sprite_counter = 0;
+            }
+        }
+        else
+        {
+            idle_counter++;
+
+            if (idle_counter > 30)
+            {
+                sprite_number = 0;
+                idle_counter = 0;
             }
         }
     }

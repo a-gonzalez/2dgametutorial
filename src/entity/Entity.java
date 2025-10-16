@@ -13,7 +13,7 @@ public class Entity
     public int hitbox_default_y;
     int speed;
     int sprite_counter = 0;
-    int sprite_number = 1;
+    int sprite_number = 0;
 
     public BufferedImage up0, up1, down0, down1, left0, left1, right0, right1;
     public Direction direction;
