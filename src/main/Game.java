@@ -33,8 +33,7 @@ public class Game extends JPanel implements Runnable
     final int FPS = 60;
 
     Thread thread;
-    
-    Control control = new Control();
+    Control control = new Control(this);
     Sound music = new Sound();
     Sound se = new Sound();
     Background background = new Background(this);
@@ -43,6 +42,9 @@ public class Game extends JPanel implements Runnable
     public Bump bump = new Bump(this);
     public Player player = new Player(control, this);
     public Item[] items = new Item[10];
+
+    // game state
+    State state;
 
     public Game()
     {
@@ -63,6 +65,8 @@ public class Game extends JPanel implements Runnable
         assets.setItems();
 
         //playMusic(0);
+
+        state = State.Play;
     }
 
     public void start()
@@ -91,7 +95,10 @@ public class Game extends JPanel implements Runnable
 
     public void update()
     {
-        player.update();
+        if (state == State.Play)
+        {
+            player.update();
+        }
     }
 
     public void draw(Graphics2D g)

@@ -14,7 +14,7 @@ public class Player extends Entity
 {
     public final int screen_x;
     public final int screen_y;
-    public int keys = 0;
+    //public int keys = 0;
     private Game game;
     private Control control;
 
@@ -78,73 +78,7 @@ public class Player extends Entity
 
     public void grabItem(int index)
     {
-        Type type = game.items[index].type;
-
-        switch (type)
-        {
-            case Key :
-            {
-                keys++;
-                game.items[index] = null;
-                game.playSE(1);
-                game.ui.displayMessage("You found a key!");
-
-                break;
-            }
-            case Boot :
-            {
-                speed += 1;
-                game.items[index] = null;
-                game.playSE(3);
-                game.ui.displayMessage("Your speed has increased!");
-
-                break;
-            }
-            case IronDoor :
-            {
-                if (keys > 0)
-                {
-                    game.items[index] = null;
-                    keys--;
-
-                    game.playSE(5);
-
-                    game.ui.displayMessage("The door has been opened.");
-                }
-                else
-                {
-                    game.ui.displayMessage("You need a key for this door.");
-                }
-                break;
-            }
-            case Chest :
-            {
-                if (keys > 0)
-                {
-                    /*Item open_chest = new OpenedChest(game);
-                    open_chest.world_x = game.items[index].world_x;
-                    open_chest.world_y = game.items[index].world_y;
-
-                    game.items[index] = open_chest;*/
-                    game.items[index] = null;
-
-                    keys--;
-
-                    game.playSE(2);
-
-                    game.ui.displayMessage("You opened the chest.");
-                    game.ui.game_complete = true;
-                    //game.stopMusic();
-                    //game.playSE(4);
-                }
-                else
-                {
-                    game.ui.displayMessage("You need a key for this chest.");
-                }
-                break;
-            }
-        }
-
+        
     }
 
     public void update()
