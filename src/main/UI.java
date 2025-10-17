@@ -57,14 +57,14 @@ public class UI
             text = "You found the treasure!";
             length = (int) g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
             x = (game.SCREEN_WIDTH / 2) - (length / 2);
-            y = (game.SCREEN_HEIGHT / 2) - game.TILE_SIZE * 2 + 25;
+            y = (game.SCREEN_HEIGHT / 2) - game.TILE_SIZE * 2 - 30;
 
             g2d.drawString(text, x, y);
 
             text = "Your time was: %.2f!";
             length = (int) g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
             x = (game.SCREEN_WIDTH / 2) - (length / 2);
-            y = (game.SCREEN_HEIGHT / 2) + game.TILE_SIZE * 3 + 20;
+            y = (game.SCREEN_HEIGHT / 2) + game.TILE_SIZE * 2 + 30;
 
             g2d.drawString(String.format(text, play_time), x, y);
 
@@ -73,7 +73,7 @@ public class UI
             text = "Congratulations";
             length = (int) g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
             x = (game.SCREEN_WIDTH / 2) - (length / 2);
-            y = (game.SCREEN_HEIGHT / 2) + game.TILE_SIZE * 2;
+            y = (game.SCREEN_HEIGHT / 2) + game.TILE_SIZE;
 
             g2d.drawString(text, x, y);
 
@@ -88,15 +88,20 @@ public class UI
 
             play_time += (double) 1 / 60;
 
-            g2d.drawString(String.format("Time: %.2f", play_time), game.TILE_SIZE * 12, 55);
+            g2d.drawString(String.format("Time: %.2f", play_time), game.TILE_SIZE * 12, 35);
             //g2d.drawString("Time: " + dformat.format(play_time), game.TILE_SIZE * 12, 55);
 
             // messages
             if (show_message)
             {
                 g2d.setColor(Color.white);
-                g2d.setFont(g2d.getFont().deriveFont(30F));
-                g2d.drawString(message, 10, 100);
+                g2d.setFont(g2d.getFont().deriveFont(25F));
+
+                int length = (int) g2d.getFontMetrics().getStringBounds(message, g2d).getWidth();
+                int x = (game.SCREEN_WIDTH / 2) - (length / 2);
+                int y = (game.SCREEN_HEIGHT / 2) - game.TILE_SIZE;
+
+                g2d.drawString(message, x, y);
 
                 message_counter++;
 

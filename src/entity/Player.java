@@ -14,7 +14,7 @@ public class Player extends Entity
 {
     public final int screen_x;
     public final int screen_y;
-    public int keys = 5;
+    public int keys = 0;
     private Game game;
     private Control control;
 
@@ -137,10 +137,10 @@ public class Player extends Entity
                     //game.stopMusic();
                     //game.playSE(4);
                 }
-                /*else
+                else
                 {
                     game.ui.displayMessage("You need a key for this chest.");
-                }*/
+                }
                 break;
             }
         }
