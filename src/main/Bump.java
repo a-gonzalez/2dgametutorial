@@ -178,4 +178,134 @@ public class Bump
             }
         }
     }
+
+    public int checkEntity(Entity entity, Entity[] target)
+    { // NPC || monster collisions
+        int result = 999;
+
+        for (int index = 0; index < target.length; index++)
+        {
+            if (target[index] != null)
+            { // get entity's hitbox position
+                entity.hitbox.x = entity.world_x + entity.hitbox.x;
+                entity.hitbox.y = entity.world_y + entity.hitbox.y;
+
+                // get the item's hitbox position
+                target[index].hitbox.x = target[index].world_x + target[index].hitbox.x;
+                target[index].hitbox.y = target[index].world_y + target[index].hitbox.y;
+
+                switch (entity.direction)
+                { // simulating entiry's movement and check where it will be after it moves
+                    case Up :
+                    {
+                        entity.hitbox.y -= entity.getSpeed();
+
+                        if (entity.hitbox.intersects(target[index].hitbox))
+                        {
+                            entity.collision = true;
+                            result = index;
+                        }
+                        break;
+                    }
+                    case Down :
+                    {
+                        entity.hitbox.y += entity.getSpeed();
+
+                        if (entity.hitbox.intersects(target[index].hitbox))
+                        {
+                            entity.collision = true;
+                            result = index;
+                        }
+                        break;
+                    }
+                    case Right :
+                    {
+                        entity.hitbox.x += entity.getSpeed();
+
+                        if (entity.hitbox.intersects(target[index].hitbox))
+                        {
+                            entity.collision = true;
+                            result = index;
+                        }
+                        break;
+                    }
+                    case Left :
+                    {
+                        entity.hitbox.x -= entity.getSpeed();
+                        
+                        if (entity.hitbox.intersects(target[index].hitbox))
+                        {
+                            entity.collision = true;
+                            result = index;
+                        }
+                        break;
+                    }
+                } // reset values after check
+                entity.hitbox.x = entity.hitbox_default_x;
+                entity.hitbox.y = entity.hitbox_default_y;
+
+                target[index].hitbox.x = target[index].hitbox_default_x;
+                target[index].hitbox.y = target[index].hitbox_default_y;
+            }
+        }
+        return result;
+    }
+
+    public void checkPlayer(Entity entity)
+    {
+        entity.hitbox.x = entity.world_x + entity.hitbox.x;
+        entity.hitbox.y = entity.world_y + entity.hitbox.y;
+
+        game.player.hitbox.x = game.player.world_x + game.player.hitbox.x;
+        game.player.hitbox.y = game.player.world_y + game.player.hitbox.y;
+
+        switch (entity.direction)
+        {
+            case Up :
+            {
+                entity.hitbox.y -= entity.getSpeed();
+
+                if (entity.hitbox.intersects(game.player.hitbox))
+                {
+                    entity.collision = true;
+                }
+                break;
+            }
+            case Down :
+            {
+                entity.hitbox.y += entity.getSpeed();
+
+                if (entity.hitbox.intersects(game.player.hitbox))
+                {
+                    entity.collision = true;
+                }
+                break;
+            }
+            case Right :
+            {
+                entity.hitbox.x += entity.getSpeed();
+
+                if (entity.hitbox.intersects(game.player.hitbox))
+                {
+                    entity.collision = true;
+                }
+                break;
+            }
+            case Left :
+            {
+                entity.hitbox.x -= entity.getSpeed();
+                
+                if (entity.hitbox.intersects(game.player.hitbox))
+                {
+                    entity.collision = true;
+                }
+                break;
+            }
+        } // reset values after check
+        entity.hitbox.x = entity.hitbox_default_x;
+        entity.hitbox.y = entity.hitbox_default_y;
+
+        game.player.hitbox.x = game.player.hitbox_default_x;
+        game.player.hitbox.y = game.player.hitbox_default_y;
+    }
 }

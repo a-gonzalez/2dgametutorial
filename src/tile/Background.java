@@ -25,8 +25,8 @@ public class Background
 
         tiles = new Tile[50];
 
-        getImages();
-        getMap("/resources/data/maps/004.dat");
+        setImages();
+        setMap("/resources/data/maps/004.dat");
     }
 
     public void setup(int index, String name, boolean solid)
@@ -81,7 +81,7 @@ public class Background
         }
     }
 
-    private void getImages()
+    private void setImages()
     {
         setup(0, "hut", false);
         setup(1, "hut", false);
@@ -127,7 +127,7 @@ public class Background
         setup(41, "tree", true);
     }
 
-    private void getMap(String path)
+    private void setMap(String path)
     {
         try
         {

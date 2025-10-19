@@ -8,7 +8,7 @@ import java.awt.Graphics2D;
 
 //import java.lang.InterruptedException;
 
-import unus.entity.Player;
+import unus.entity.*;
 import unus.tile.Background;
 import unus.item.*;
 
@@ -40,8 +40,9 @@ public class Game extends JPanel implements Runnable
     public UI ui = new UI(this);
     public Assets assets = new Assets(this);
     public Bump bump = new Bump(this);
-    public Player player = new Player(control, this);
+    public Player player = new Player(this, control);
     public Item[] items = new Item[10];
+    public Entity[] npc = new Entity[10];
 
     // game state
     State state;
@@ -62,7 +63,8 @@ public class Game extends JPanel implements Runnable
 
     public void setup()
     {
-        assets.setItems();
+        //assets.setItems();
+        assets.setNPCs();
 
         //playMusic(0);
 
@@ -98,6 +100,14 @@ public class Game extends JPanel implements Runnable
         if (state == State.Play)
         {
             player.update();
+
+            for (int index = 0; index < npc.length; index++)
+            {
+                if (npc[index] != null)
+                {
+                    npc[index].update();
+                }
+            }
         }
     }
 
@@ -114,6 +124,14 @@ public class Game extends JPanel implements Runnable
             if (items[index] != null)
             {
                 items[index].draw(g);
+            }
+        }
+
+        for (int index = 0; index < npc.length; index++)
+        {
+            if (npc[index] != null)
+            {
+                npc[index].draw(g);
             }
         }
         player.draw(g);

@@ -15,21 +15,22 @@ public class UI
     Font Arial_40P;
     Font Arial_40B;
     Font Arial_50P;
+    Font ComicSans_30P;
     int message_counter = 0;
     public boolean game_complete = false;
     public boolean show_message = false;
     public String message = "";
 
-    double play_time;
-   // DecimalFormat dformat;
-
     public UI(Game game)
     {
         this.game = game;
-        this.Arial_20P = new Font("Arial", Font.PLAIN, 20);
-        this.Arial_40P = new Font("Arial", Font.PLAIN, 40);
-        this.Arial_50P = new Font("Arial", Font.PLAIN, 50);
-        this.Arial_40B = new Font("Arial", Font.BOLD, 40);
+
+        Arial_20P = new Font("Arial", Font.PLAIN, 20);
+        Arial_40P = new Font("Arial", Font.PLAIN, 40);
+        Arial_50P = new Font("Arial", Font.PLAIN, 50);
+        Arial_40B = new Font("Arial", Font.BOLD, 40);
+
+        this.ComicSans_30P = new Font("Comic Sans", Font.PLAIN, 30);
     }
 
     public void displayMessage(String message)
@@ -49,10 +50,21 @@ public class UI
         {
 
         }
-        else if (game.state == State.Pause)
+        
+        if (game.state == State.Pause)
         {
             drawPauseScreen();
         }
+        
+        if (game.state == State.Dialoque)
+        {
+            drawDialoqueScreen();
+        }
+    }
+
+    public void drawDialoqueScreen()
+    {
+
     }
 
     public void drawPauseScreen()

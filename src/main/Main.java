@@ -8,7 +8,7 @@ public class Main
     {
         Game game = new Game();
 
-        JFrame frame = new JFrame("Treasure Hunter");
+        JFrame frame = new JFrame("Drifter");
         frame.setSize(game.SCREEN_WIDTH, game.SCREEN_HEIGHT);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);

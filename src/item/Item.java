@@ -18,8 +18,8 @@ public class Item
     public int hitbox_default_x;
     public int hitbox_default_y;
 
-    public Game game;
-    public Utility util = new Utility();
+    Game game;
+    Utility util = new Utility();
 
     public Item(Game game)
     {

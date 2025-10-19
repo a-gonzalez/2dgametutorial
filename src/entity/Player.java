@@ -1,11 +1,9 @@
 package unus.entity;
 
 import java.awt.Color;
-import java.io.IOException;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.Rectangle;
-import javax.imageio.ImageIO;
 
 import unus.main.*;
 import unus.item.*;
@@ -15,19 +13,16 @@ public class Player extends Entity
     public final int screen_x;
     public final int screen_y;
     //public int keys = 0;
-    private Game game;
     private Control control;
 
     private int idle_counter = 0;
     //private int pixel_counter = 0;
 
-    public Player(Control control, Game game)
+    public Player(Game game, Control control)
     {
-        super();
+        super(game);
 
         this.control = control; // keyboard listener for movement
-        this.game = game;
-
         this.screen_x = (game.SCREEN_WIDTH / 2) - (game.TILE_SIZE / 2);
         this.screen_y = (game.SCREEN_HEIGHT / 2) - (game.TILE_SIZE / 2);
 
@@ -36,7 +31,7 @@ public class Player extends Entity
         hitbox_default_y = hitbox.y;
 
         initialize();
-        getImages();
+        setImages();
     }
 
     public void initialize()
@@ -47,38 +42,31 @@ public class Player extends Entity
         this.direction = Direction.Down;
     }
 
-    private BufferedImage setup(String name)
+    private void setImages()
     {
-        Utility util = new Utility();
-        BufferedImage image = null;
-
-        try
-        {
-            image = ImageIO.read(getClass().getResourceAsStream(String.format("/resources/image/player/%s.png", name)));
-            image = util.scale(image, game.TILE_SIZE, game.TILE_SIZE);
-        }
-        catch (IOException exception)
-        {
-            exception.printStackTrace();
-        }
-        return image;
-    }
-
-    public void getImages()
-    {
-        up0 = setup("up0");
-        up1 = setup("up1");
-        down0 = setup("down0");
-        down1 = setup("down1");
-        right0 = setup("right0");
-        right1 = setup("right1");
-        left0 = setup("left0");
-        left1 = setup("left1");
+        up0 = setup("/resources/image/player/up0.png");
+        up1 = setup("/resources/image/player/up1.png");
+        down0 = setup("/resources/image/player/down0.png");
+        down1 = setup("/resources/image/player/down1.png");
+        right0 = setup("/resources/image/player/right0.png");
+        right1 = setup("/resources/image/player/right1.png");
+        left0 = setup("/resources/image/player/left0.png");
+        left1 = setup("/resources/image/player/left1.png");
     }
 
     public void grabItem(int index)
     {
-        
+        if (index != 999)
+        {
+        }
+    }
+
+    public void contactNPC(int index)
+    {
+        if (index != 999)
+        {
+            System.out.println(String.format("NPC collision. %s", direction));
+        }
     }
 
     public void update()
@@ -89,25 +77,6 @@ public class Player extends Entity
         {
             this.direction = direction;
 
-            /*switch (direction)
-            {
-                case Right :
-                {
-                    world_x += speed; break;
-                }
-                case Left :
-                {
-                    world_x -= speed; break;
-                }
-                case Up :
-                {
-                    world_y -= speed; break;
-                }
-                case Down :
-                {
-                    world_y += speed; break;
-                }
-            }*/
             collision = false;
 
             // check solid tile collision
@@ -115,11 +84,11 @@ public class Player extends Entity
 
             // check item collision
             int index = game.bump.checkItem(this, true);
+            grabItem(index);
 
-            if (index != 999)
-            {
-                grabItem(index);
-            }
+            index = game.bump.checkEntity(this, game.npc);
+
+            contactNPC(index);
 
             if (collision == false)
             { // if no collision, player can move
@@ -147,14 +116,7 @@ public class Player extends Entity
 
             if (sprite_counter > 14)
             {
-                if (sprite_number == 0)
-                {
-                    sprite_number = 1;
-                }
-                else if (sprite_number == 1)
-                {
-                    sprite_number = 0;
-                }
+                sprite_number = (sprite_number == 0) ? 1 : 0;
                 sprite_counter = 0;
             }
             /*pixel_counter += speed;
@@ -186,54 +148,19 @@ public class Player extends Entity
         {
             case Right :
             {
-                if (sprite_number == 0)
-                {
-                    image = right0;
-                }
-                
-                if (sprite_number == 1)
-                {
-                    image = right1;
-                }
-                break;
+                image = (sprite_number == 0) ? right0 : right1; break;
             }
             case Left :
             {
-                if (sprite_number == 0)
-                {
-                    image = left0;
-                }
-                
-                if (sprite_number == 1)
-                {
-                    image = left1;
-                }
-                break;
+                image = (sprite_number == 0) ? left0 : left1; break;
             }
             case Up :
             {
-                if (sprite_number == 0)
-                {
-                    image = up0;
-                }
-                
-                if (sprite_number == 1)
-                {
-                    image = up1;
-                }
-                break;
+                image = (sprite_number == 0) ? up0 : up1; break;
             }
             case Down :
             {
-                if (sprite_number == 0)
-                {
-                    image = down0;
-                }
-                
-                if (sprite_number == 1)
-                {
-                    image = down1;
-                }
+                image = (sprite_number == 0) ? down0 : down1; break;
             }
         }
         g2d.drawImage(image, screen_x, screen_y, null);
