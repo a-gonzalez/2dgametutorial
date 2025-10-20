@@ -66,7 +66,7 @@ public class Game extends JPanel implements Runnable
 
         //playMusic(0);
 
-        state = State.Play;
+        state = State.Title;
     }
 
     public void start()
@@ -114,27 +114,32 @@ public class Game extends JPanel implements Runnable
         // DEBUG = how long does it take to draw images?
         /*long start = System.nanoTime();
         long end = 0;*/
-
-        background.draw(g);
-
-        for (int index = 0; index < items.length; index++)
+        if (state == State.Title)
         {
-            if (items[index] != null)
-            {
-                items[index].draw(g);
-            }
+            ui.draw(g);
         }
-
-        for (int index = 0; index < npc.length; index++)
+        else
         {
-            if (npc[index] != null)
-            {
-                npc[index].draw(g);
-            }
-        }
-        player.draw(g);
-        ui.draw(g);
+            background.draw(g);
 
+            for (int index = 0; index < items.length; index++)
+            {
+                if (items[index] != null)
+                {
+                    items[index].draw(g);
+                }
+            }
+
+            for (int index = 0; index < npc.length; index++)
+            {
+                if (npc[index] != null)
+                {
+                    npc[index].draw(g);
+                }
+            }
+            player.draw(g);
+            ui.draw(g);
+        }
         /*end = System.nanoTime();
         long elapsed = end - start;
 

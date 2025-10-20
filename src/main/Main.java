@@ -9,7 +9,7 @@ public class Main
     {
         Game game = new Game();
 
-        JFrame frame = new JFrame("Drifter");
+        JFrame frame = new JFrame("Blue Drifter Adventure");
         frame.setSize(game.SCREEN_WIDTH, game.SCREEN_HEIGHT);
         frame.setLocationRelativeTo(null);
         frame.setResizable(false);

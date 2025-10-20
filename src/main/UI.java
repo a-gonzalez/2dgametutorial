@@ -11,13 +11,9 @@ import java.awt.BasicStroke;
 public class UI
 {
     Game game;
-    //BufferedImage key_image;
     Graphics2D g2d;
-    /*Font Arial_20P;
-    Font Arial_40P;
-    Font Arial_40B;
-    Font Arial_50P;*/
-    Font ComicSans_25P;
+    Option option = Option.New;
+    Font Papyrus_25P;
     int message_counter = 0;
     public boolean game_complete = false;
     public boolean show_message = false;
@@ -29,11 +25,6 @@ public class UI
     public UI(Game game)
     {
         this.game = game;
-
-        /*Arial_20P = new Font("Arial", Font.PLAIN, 20);
-        Arial_40P = new Font("Arial", Font.PLAIN, 40);
-        Arial_50P = new Font("Arial", Font.PLAIN, 50);
-        Arial_40B = new Font("Arial", Font.BOLD, 40);*/
         
         /*try
         {// we can make use of any true-type font for the game
@@ -54,7 +45,8 @@ public class UI
             exception.printStackTrace();
         }*/
 
-        this.ComicSans_25P = new Font("Comic Sans MS", Font.PLAIN, 25);
+        //ComicSans_25P = new Font("Comic Sans MS", Font.PLAIN, 25);
+        Papyrus_25P = new Font("Papyrus", Font.PLAIN, 25);
     }
 
     public void displayMessage(String message)
@@ -67,8 +59,13 @@ public class UI
     {
         this.g2d = g2d;
 
-        g2d.setFont(ComicSans_25P);
+        g2d.setFont(Papyrus_25P);
         g2d.setColor(Color.white);
+
+        if (game.state == State.Title)
+        {
+            drawTitleScreen();
+        }
 
         if (game.state == State.Play)
         {
@@ -83,6 +80,62 @@ public class UI
         if (game.state == State.Dialoque)
         {
             drawDialoqueScreen();
+        }
+    }
+
+    public void drawTitleScreen()
+    {
+        g2d.setColor(new Color(0, 0, 0));
+        g2d.fillRect(0, 0, game.SCREEN_WIDTH, game.SCREEN_HEIGHT);
+
+        g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN, 60F));
+
+        String text = "Blue Drifter Adventure";
+        int x = getXToCenterText(text);
+        int y = game.TILE_SIZE * 2;
+
+        g2d.setColor(Color.GRAY);
+        g2d.drawString(text, x - 3, y - 3);
+        g2d.setColor(Color.BLUE);
+        g2d.drawString(text, x, y);
+
+        x = game.SCREEN_WIDTH / 2 - (game.TILE_SIZE * 2) / 2;
+        y += game.TILE_SIZE * 2;
+
+        g2d.drawImage(game.player.down0, x, y, game.TILE_SIZE * 2, game.TILE_SIZE * 2, null);
+        g2d.setFont(g2d.getFont().deriveFont(30F));
+
+        text = "New";
+        x = getXToCenterText(text);
+        y += game.TILE_SIZE * 3.5;
+
+        g2d.drawString(text, x, y);
+
+        if (option == Option.New)
+        {
+            g2d.drawString(">", x - game.TILE_SIZE, y);
+        }
+
+        text = "Load";
+        x = getXToCenterText(text);
+        y += game.TILE_SIZE;
+
+        g2d.drawString(text, x, y);
+
+        if (option == Option.Load)
+        {
+            g2d.drawString(">", x - game.TILE_SIZE, y);
+        }
+
+        text = "Quit";
+        x = getXToCenterText(text);
+        y += game.TILE_SIZE;
+
+        g2d.drawString(text, x, y);
+
+        if (option == Option.Quit)
+        {
+            g2d.drawString(">", x - game.TILE_SIZE, y);
         }
     }
 

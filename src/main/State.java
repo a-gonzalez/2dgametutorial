@@ -5,5 +5,6 @@ public enum State
     Play,
     Pause,
     Dialoque,
+    Title,
     Idle
 }
