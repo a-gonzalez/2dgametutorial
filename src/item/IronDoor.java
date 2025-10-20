@@ -11,13 +11,18 @@ public class IronDoor extends Item
     {
         super(game);
 
+        initialize();
+    }
+
+    private void initialize()
+    {
         this.type = Type.IronDoor;
         this.solid = true;
 
-        getImage();
+        setImage();
     }
 
-    private void getImage()
+    private void setImage()
     {
         try
         {

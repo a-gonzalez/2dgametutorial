@@ -16,6 +16,8 @@ public class Entity
     public int hitbox_default_x;
     public int hitbox_default_y;
     public int action_counter = 0;
+    public int life_max;
+    public int life;
 
     public BufferedImage up0, up1, down0, down1, left0, left1, right0, right1;
     public Direction direction;

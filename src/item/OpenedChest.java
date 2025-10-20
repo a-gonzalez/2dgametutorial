@@ -11,13 +11,18 @@ public class OpenedChest extends Item
     {
         super(game);
 
-        this.type = Type.Chest;
-        this.solid = true;
-
-        getImage();
+        initialize();
     }
 
-    private void getImage()
+    private void initialize()
+    {
+        this.type = Type.ChestOpened;
+        this.solid = true;
+
+        setImage();
+    }
+
+    private void setImage()
     {
         try
         {

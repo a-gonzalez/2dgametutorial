@@ -7,5 +7,6 @@ public enum Type
     IronDoor,
     Chest,
     ChestOpened,
-    Boot
+    Boot,
+    Heart
 }

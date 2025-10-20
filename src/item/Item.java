@@ -9,7 +9,7 @@ import unus.main.Utility;
 
 public class Item
 {
-    public BufferedImage image;
+    public BufferedImage image, image1, image2;
     public Rectangle hitbox;
     public Type type;
     public boolean solid;
@@ -19,15 +19,20 @@ public class Item
     public int hitbox_default_y;
 
     Game game;
-    Utility util = new Utility();
+    Utility util;
 
     public Item(Game game)
     {
         this.game = game;
-        this.solid = false;
-        this.hitbox = new Rectangle(0, 0, game.TILE_SIZE, game.TILE_SIZE);
-        this.hitbox_default_x = 0;
-        this.hitbox_default_y = 0;
+        this.util = new Utility();
+    }
+
+    private void initialize()
+    {
+        solid = false;
+        hitbox = new Rectangle(0, 0, game.TILE_SIZE, game.TILE_SIZE);
+        hitbox_default_x = 0;
+        hitbox_default_y = 0;
     }
 
     public void draw(Graphics2D g2d)

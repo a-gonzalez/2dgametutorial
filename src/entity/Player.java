@@ -27,20 +27,22 @@ public class Player extends Entity
         this.screen_x = (game.SCREEN_WIDTH / 2) - (game.TILE_SIZE / 2);
         this.screen_y = (game.SCREEN_HEIGHT / 2) - (game.TILE_SIZE / 2);
 
-        hitbox = new Rectangle(8, 16, 32, 32);
-        hitbox_default_x = hitbox.x;
-        hitbox_default_y = hitbox.y;
-
         initialize();
-        setImages();
     }
 
     public void initialize()
     {
-        this.world_x = game.TILE_SIZE * 23;
-        this.world_y = game.TILE_SIZE * 21;
-        this.speed = 4;
-        this.direction = Direction.Down;
+        hitbox = new Rectangle(8, 16, 32, 32);
+        hitbox_default_x = hitbox.x;
+        hitbox_default_y = hitbox.y;
+        world_x = game.TILE_SIZE * 23;
+        world_y = game.TILE_SIZE * 21;
+        speed = 4;
+        direction = Direction.Down;
+        life_max = 6;
+        life = life_max;
+
+        setImages();
     }
 
     private void setImages()

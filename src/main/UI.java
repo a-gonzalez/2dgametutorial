@@ -7,11 +7,15 @@ import java.awt.Graphics2D;
 import java.awt.Font;
 //import java.awt.FontFormatException;
 import java.awt.BasicStroke;
+import java.awt.image.BufferedImage;
+
+import unus.item.*;
 
 public class UI
 {
     Game game;
     Graphics2D g2d;
+    BufferedImage heart_full, heart_half, heart_empty;
     Option option = Option.New;
     Font Papyrus_25P;
     int message_counter = 0;
@@ -26,6 +30,11 @@ public class UI
     {
         this.game = game;
         
+        initialize();
+    }
+
+    private void initialize()
+    {
         /*try
         {// we can make use of any true-type font for the game
             InputStream stream = getClass().getResourceAsStream("/resources/font/pixel_zone.ttf");
@@ -45,8 +54,12 @@ public class UI
             exception.printStackTrace();
         }*/
 
-        //ComicSans_25P = new Font("Comic Sans MS", Font.PLAIN, 25);
         Papyrus_25P = new Font("Papyrus", Font.PLAIN, 25);
+
+        Item heart = new Heart(game);
+        heart_full = heart.image;
+        heart_half = heart.image1;
+        heart_empty = heart.image2;
     }
 
     public void displayMessage(String message)
@@ -69,17 +82,49 @@ public class UI
 
         if (game.state == State.Play)
         {
-
+            drawPlayerLife();
         }
         
         if (game.state == State.Pause)
         {
+            drawPlayerLife();
             drawPauseScreen();
         }
         
         if (game.state == State.Dialoque)
         {
+            drawPlayerLife();
             drawDialoqueScreen();
+        }
+    }
+
+    public void drawPlayerLife()
+    {
+        int x = game.TILE_SIZE / 2;
+        int y = game.TILE_SIZE / 2;
+        int index = 0;
+
+        while (index < game.player.life_max / 2)
+        {// max life
+            g2d.drawImage(heart_empty, x, y, null);
+            index++;
+            x += game.TILE_SIZE;
+        }
+        x = game.TILE_SIZE / 2;
+        y = game.TILE_SIZE / 2;
+        index = 0;
+
+        while (index < game.player.life)
+        {// current life
+            g2d.drawImage(heart_half, x, y, null);
+            index++;
+
+            if (index < game.player.life)
+            {
+                g2d.drawImage(heart_full, x, y, null);
+            }
+            index++;
+            x += game.TILE_SIZE;
         }
     }
 
@@ -150,8 +195,6 @@ public class UI
 
         x += game.TILE_SIZE;
         y += game.TILE_SIZE;
-
-        //g2d.setFont(ComicSans_25P);
         
         for (String line : dialoque.split("\n"))
         {
@@ -177,7 +220,7 @@ public class UI
 
     public void drawPauseScreen()
     {
-        //g2d.setFont(Arial_50P);
+        g2d.setFont(g2d.getFont().deriveFont(Font.PLAIN, 50F));
 
         String text = "PAUSED";
         int x = getXToCenterText(text);

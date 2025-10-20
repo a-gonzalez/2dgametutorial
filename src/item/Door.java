@@ -11,13 +11,17 @@ public class Door extends Item
     {
         super(game);
 
-        this.type = Type.Door;
-        this.solid = true;
-
-        getImage();
+        initialize();
     }
 
-    private void getImage()
+    private void initialize()
+    {
+        this.type = Type.Door;
+        this.solid = true;
+        
+        setImage();
+    }
+    private void setImage()
     {
         try
         {
