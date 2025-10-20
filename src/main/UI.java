@@ -1,8 +1,11 @@
 package unus.main;
 
+import java.io.IOException;
+//import java.io.InputStream;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Font;
+//import java.awt.FontFormatException;
 import java.awt.BasicStroke;
 
 public class UI
@@ -10,10 +13,10 @@ public class UI
     Game game;
     //BufferedImage key_image;
     Graphics2D g2d;
-    Font Arial_20P;
+    /*Font Arial_20P;
     Font Arial_40P;
     Font Arial_40B;
-    Font Arial_50P;
+    Font Arial_50P;*/
     Font ComicSans_25P;
     int message_counter = 0;
     public boolean game_complete = false;
@@ -21,14 +24,35 @@ public class UI
     public String message = "";
     public String dialoque = "";
 
+    //Font pixel_zone, super_pixel;
+
     public UI(Game game)
     {
         this.game = game;
 
-        Arial_20P = new Font("Arial", Font.PLAIN, 20);
+        /*Arial_20P = new Font("Arial", Font.PLAIN, 20);
         Arial_40P = new Font("Arial", Font.PLAIN, 40);
         Arial_50P = new Font("Arial", Font.PLAIN, 50);
-        Arial_40B = new Font("Arial", Font.BOLD, 40);
+        Arial_40B = new Font("Arial", Font.BOLD, 40);*/
+        
+        /*try
+        {// we can make use of any true-type font for the game
+            InputStream stream = getClass().getResourceAsStream("/resources/font/pixel_zone.ttf");
+
+            pixel_zone =  Font.createFont(Font.TRUETYPE_FONT, stream);
+
+            stream = getClass().getResourceAsStream("/resources/font/super_pixel.ttf");
+
+            super_pixel =  Font.createFont(Font.TRUETYPE_FONT, stream);
+        }
+        catch (FontFormatException exception)
+        {
+            exception.printStackTrace();
+        }
+        catch (IOException exception)
+        {
+            exception.printStackTrace();
+        }*/
 
         this.ComicSans_25P = new Font("Comic Sans MS", Font.PLAIN, 25);
     }
@@ -43,7 +67,7 @@ public class UI
     {
         this.g2d = g2d;
 
-        g2d.setFont(Arial_20P);
+        g2d.setFont(ComicSans_25P);
         g2d.setColor(Color.white);
 
         if (game.state == State.Play)
@@ -74,7 +98,7 @@ public class UI
         x += game.TILE_SIZE;
         y += game.TILE_SIZE;
 
-        g2d.setFont(ComicSans_25P);
+        //g2d.setFont(ComicSans_25P);
         
         for (String line : dialoque.split("\n"))
         {
@@ -100,7 +124,7 @@ public class UI
 
     public void drawPauseScreen()
     {
-        g2d.setFont(Arial_50P);
+        //g2d.setFont(Arial_50P);
 
         String text = "PAUSED";
         int x = getXToCenterText(text);
