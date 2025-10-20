@@ -8,6 +8,8 @@ public class Control implements KeyListener
     private Direction direction;
     private Game game;
 
+    public boolean enter_pressed = false;
+
     public Control(Game game)
     {
         this.direction = Direction.Idle;
@@ -29,39 +31,52 @@ public class Control implements KeyListener
     public void keyPressed(KeyEvent event)
     {
         //System.out.println(String.format("KeyPressed: %d", event.getKeyCode()));
-
-        switch (event.getKeyCode())
+        if (game.state == State.Play)
         {
-            case 37 : // VK_LEFT
-            case 65 : // VK_A
+            switch (event.getKeyCode())
             {
-                direction = Direction.Left; break;
-            }
-            case 38 : // VK_UP
-            case 87 : // VK_W
-            {
-                direction = Direction.Up; break;
-            }
-            case 39 : // VK_RIGHT
-            case 68 : // VK_D
-            {
-                direction = Direction.Right; break;
-            }
-            case 40 : // VK_DOWN
-            case 83 : // VK_S
-            {
-                direction = Direction.Down; break;
-            }
-            case 80 : // VK_P
-            {
-                if (game.state == State.Play)
+                case KeyEvent.VK_LEFT :
+                case KeyEvent.VK_A :
                 {
-                    game.state = State.Pause;
+                    direction = Direction.Left; break;
                 }
-                else
+                case KeyEvent.VK_UP :
+                case KeyEvent.VK_W :
                 {
-                    game.state = State.Play;
+                    direction = Direction.Up; break;
                 }
+                case KeyEvent.VK_RIGHT :
+                case KeyEvent.VK_D :
+                {
+                    direction = Direction.Right; break;
+                }
+                case KeyEvent.VK_DOWN :
+                case KeyEvent.VK_S :
+                {
+                    direction = Direction.Down; break;
+                }
+                case KeyEvent.VK_P :
+                {
+                    game.state = State.Pause; break;
+                }
+                case KeyEvent.VK_ENTER :
+                {
+                    enter_pressed = true;
+                }
+            }
+        }
+        else if (game.state == State.Pause)
+        {
+            if (event.getKeyCode() == KeyEvent.VK_P)
+            {
+                game.state = State.Play;
+            }
+        }
+        else if (game.state == State.Dialoque)
+        {
+            if (event.getKeyCode() == KeyEvent.VK_ENTER)
+            {
+                game.state = State.Play;
             }
         }
     }
@@ -70,28 +85,30 @@ public class Control implements KeyListener
     public void keyReleased(KeyEvent event)
     {
         //System.out.println(String.format("KeyReleased: %d", event.getKeyCode()));
-
-        switch (event.getKeyCode())
+        if (game.state == State.Play)
         {
-            case 37 : // VK_LEFT
-            case 65 : // VK_A
+            switch (event.getKeyCode())
             {
-                direction = Direction.Idle; break;
-            }
-            case 38 : // VK_UP
-            case 87 : // VK_W
-            {
-                direction = Direction.Idle; break;
-            }
-            case 39 : // VK_RIGHT
-            case 68 : // VK_D
-            {
-                direction = Direction.Idle; break;
-            }
-            case 40 : // VK_DOWN
-            case 83 : // VK_S
-            {
-                direction = Direction.Idle; break;
+                case KeyEvent.VK_LEFT :
+                case KeyEvent.VK_A :
+                {
+                    direction = Direction.Idle; break;
+                }
+                case KeyEvent.VK_UP :
+                case KeyEvent.VK_W :
+                {
+                    direction = Direction.Idle; break;
+                }
+                case KeyEvent.VK_RIGHT :
+                case KeyEvent.VK_D :
+                {
+                    direction = Direction.Idle; break;
+                }
+                case KeyEvent.VK_DOWN :
+                case KeyEvent.VK_S :
+                {
+                    direction = Direction.Idle; break;
+                }
             }
         }
     }

@@ -1,6 +1,7 @@
 package unus.main;
 
 import javax.swing.JFrame;
+//import java.awt.GraphicsEnvironment;
 
 public class Main
 {
@@ -15,6 +16,13 @@ public class Main
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(game); // Game is a panel
         frame.pack();
+
+        /*String fonts[]
+        = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+
+        for (int i = 0; i < fonts.length; i++) {
+            System.out.println(fonts[i]);
+        }*/
 
         game.requestFocus();
         game.setup();

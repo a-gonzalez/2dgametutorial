@@ -1,5 +1,6 @@
 package unus.entity;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
@@ -25,6 +26,9 @@ public class Entity
     int sprite_counter = 0;
     int sprite_number = 0;
 
+    String[] dialoques = new String[10];
+    int dialoque_index = 0;
+
     Game game;
 
     public Entity(Game game)
@@ -40,6 +44,37 @@ public class Entity
 
     public void setAction()
     {
+    }
+
+    public void speak()
+    {
+        if (dialoques[dialoque_index] == null)
+        {
+            dialoque_index = 0;
+        }
+        game.ui.dialoque = dialoques[dialoque_index];
+
+        dialoque_index++;
+
+        switch (game.player.direction)
+        {
+            case Up :
+            {
+                direction = Direction.Down; break;
+            }
+            case Down :
+            {
+                direction = Direction.Up; break;
+            }
+            case Right :
+            {
+                direction = Direction.Left; break;
+            }
+            case Left :
+            {
+                direction = Direction.Right; break;
+            }
+        }
     }
 
     public void update()
@@ -115,6 +150,8 @@ public class Entity
                     }
                 }
                 g2d.drawImage(image, screen_x, screen_y, game.TILE_SIZE, game.TILE_SIZE, null);
+                g2d.setColor(Color.GREEN);
+                g2d.drawRect(screen_x + hitbox.x, screen_y + hitbox.y, hitbox.width, hitbox.height);
             }
     }
 

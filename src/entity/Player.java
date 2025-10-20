@@ -17,6 +17,7 @@ public class Player extends Entity
 
     private int idle_counter = 0;
     //private int pixel_counter = 0;
+    private int dialoque_counter = 60;
 
     public Player(Game game, Control control)
     {
@@ -65,8 +66,13 @@ public class Player extends Entity
     {
         if (index != 999)
         {
-            System.out.println(String.format("NPC collision. %s", direction));
+            if (game.control.enter_pressed == true)
+            {
+                game.state = State.Dialoque;
+                game.npc[index].speak();
+            }
         }
+        game.control.enter_pressed = false;
     }
 
     public void update()

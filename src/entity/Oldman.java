@@ -23,13 +23,19 @@ public class Oldman extends Entity
         this.direction = Direction.Down;
 
         setImages();
+        setDialoques();
+    }
+
+    public void speak()
+    {
+        super.speak();
     }
 
     public void setAction()
     {// simplest AI of all time
         action_counter++;
 
-        if (action_counter == 120)
+        if (action_counter == 120) // 2 seconds
         {
             Random random = new Random();
             int i = random.nextInt(100) + 1; // 1 - 100 instead of 0 - 99
@@ -55,6 +61,16 @@ public class Oldman extends Entity
             }
             action_counter = 0;
         }
+    }
+
+    public void setDialoques()
+    {
+        dialoques[0] = "In another life, I would have really liked\njust doing laundry and taxes with you.\nA bunch of other stuff to say too. Maybe\neven a trip to the beach to get some sun.";
+        dialoques[1] = "Are you lost?";
+        dialoques[2] = "Watch out for monsters!";
+        dialoques[3] = "Greetings, lad.";
+        dialoques[4] = "Be careful exploring the island.";
+        dialoques[5] = "Beware of the ghosts roaming the island.";
     }
 
     private void setImages()

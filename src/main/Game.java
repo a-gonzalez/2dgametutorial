@@ -33,19 +33,17 @@ public class Game extends JPanel implements Runnable
     final int FPS = 60;
 
     Thread thread;
-    Control control = new Control(this);
     Sound music = new Sound();
     Sound se = new Sound();
     Background background = new Background(this);
+    public Control control = new Control(this);
     public UI ui = new UI(this);
     public Assets assets = new Assets(this);
     public Bump bump = new Bump(this);
+    public State state;
     public Player player = new Player(this, control);
     public Item[] items = new Item[10];
     public Entity[] npc = new Entity[10];
-
-    // game state
-    State state;
 
     public Game()
     {
