@@ -69,8 +69,9 @@ public class Oldman extends Entity
         dialoques[1] = "Are you lost?";
         dialoques[2] = "Watch out for monsters!";
         dialoques[3] = "Be careful exploring the island.";
-        dialoques[4] = "Beware of the ghosts roaming the island.";
-        dialoques[5] = "In another life, I would have really liked\njust doing laundry and taxes with you.\nA bunch of other stuff to say too. Maybe\neven a trip to the beach to get some sun.";
+        dialoques[4] = "Beware of the pits around the island.";
+        dialoques[5] = "Some of the water on the island heals damage.";
+        dialoques[6] = "In another life, I would have really liked\njust doing laundry and taxes with you.\nA bunch of other stuff to say too. Maybe\neven a trip to the beach to get some sun.";
     }
 
     private void setImages()

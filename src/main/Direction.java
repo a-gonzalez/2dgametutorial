@@ -6,5 +6,6 @@ public enum Direction
     Left,
     Up,
     Down,
-    Idle
+    Idle,
+    Any
 }

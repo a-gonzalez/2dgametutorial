@@ -83,6 +83,23 @@ public class UI
         if (game.state == State.Play)
         {
             drawPlayerLife();
+
+            if (show_message)
+            {
+                int length = (int) g2d.getFontMetrics().getStringBounds(message, g2d).getWidth();
+                int x = (game.SCREEN_WIDTH / 2) - (length / 2);
+                int y = (game.SCREEN_HEIGHT / 2) - game.TILE_SIZE;
+
+                g2d.drawString(message, x, y);
+
+                ++message_counter;
+
+                if (message_counter > 120)
+                {
+                    show_message = false;
+                    message_counter = 0;
+                }
+            }
         }
         
         if (game.state == State.Pause)

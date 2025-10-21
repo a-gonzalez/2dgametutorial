@@ -74,7 +74,6 @@ public class Player extends Entity
                 game.npc[index].speak();
             }
         }
-        game.control.enter_pressed = false;
     }
 
     public void update()
@@ -94,9 +93,15 @@ public class Player extends Entity
             int index = game.bump.checkItem(this, true);
             grabItem(index);
 
+            // check NPC collision
             index = game.bump.checkEntity(this, game.npc);
 
             contactNPC(index);
+
+            // check events
+            game.event.check();
+
+            game.control.enter_pressed = false;
 
             if (collision == false)
             { // if no collision, player can move

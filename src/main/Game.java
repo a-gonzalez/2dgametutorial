@@ -37,6 +37,7 @@ public class Game extends JPanel implements Runnable
     Sound se = new Sound();
     Background background = new Background(this);
     public Control control = new Control(this);
+    public Event event = new Event(this);
     public UI ui = new UI(this);
     public Assets assets = new Assets(this);
     public Bump bump = new Bump(this);
