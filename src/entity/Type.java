@@ -1,4 +1,4 @@
-package unus.item;
+package unus.entity;
 
 public enum Type
 {
@@ -8,5 +8,6 @@ public enum Type
     Chest,
     ChestOpened,
     Boot,
-    Heart
+    Heart,
+    None
 }

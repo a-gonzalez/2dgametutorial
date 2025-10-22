@@ -5,12 +5,14 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 //import java.lang.InterruptedException;
 
 import unus.entity.*;
 import unus.tile.Background;
-import unus.item.*;
 
 public class Game extends JPanel implements Runnable
 {
@@ -43,8 +45,10 @@ public class Game extends JPanel implements Runnable
     public Bump bump = new Bump(this);
     public State state;
     public Player player = new Player(this, control);
-    public Item[] items = new Item[10];
+    public Entity[] items = new Entity[10];
     public Entity[] npc = new Entity[10];
+
+    ArrayList<Entity> list = new ArrayList<Entity>();
 
     public Game()
     {
@@ -62,7 +66,7 @@ public class Game extends JPanel implements Runnable
 
     public void setup()
     {
-        //assets.setItems();
+        assets.setItems();
         assets.setNPCs();
 
         //playMusic(0);
@@ -123,22 +127,43 @@ public class Game extends JPanel implements Runnable
         {
             background.draw(g);
 
-            for (int index = 0; index < items.length; index++)
-            {
-                if (items[index] != null)
-                {
-                    items[index].draw(g);
-                }
-            }
+            list.add(player);
 
             for (int index = 0; index < npc.length; index++)
             {
                 if (npc[index] != null)
                 {
-                    npc[index].draw(g);
+                    list.add(npc[index]);
                 }
             }
-            player.draw(g);
+
+            for (int index = 0; index < items.length; index++)
+            {
+                if (items[index] != null)
+                {
+                    list.add(items[index]);
+
+                    //System.out.println(items[index].getClass().getName());
+                }
+            }
+
+            Collections.sort(list, new Comparator<Entity>()
+            {
+                @Override
+                public int compare(Entity a, Entity b)
+                {
+                    int result = Integer.compare(a.world_y, b.world_y);
+
+                    return result;
+                }
+            });
+
+            for (int index = 0; index < list.size(); index++)
+            {
+                list.get(index).draw(g);
+            }
+            list.clear();
+
             ui.draw(g);
         }
         /*end = System.nanoTime();

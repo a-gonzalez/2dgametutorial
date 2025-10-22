@@ -1,7 +1,6 @@
 package unus.main;
 
 import unus.entity.*;
-import unus.item.*;
 
 public class Assets
 {// this class will handle all the game assets (door, boot, key, etc...)
@@ -15,6 +14,13 @@ public class Assets
     public void setItems()
     {
 
+        game.items[0] = new Chest(game);
+        game.items[0].world_x = game.TILE_SIZE * 12;
+        game.items[0].world_y = game.TILE_SIZE * 8;
+
+        game.items[1] = new IronDoor(game);
+        game.items[1].world_x = game.TILE_SIZE * 12;
+        game.items[1].world_y = game.TILE_SIZE * 12;
     }
 
     public void setNPCs()

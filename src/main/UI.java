@@ -9,7 +9,7 @@ import java.awt.Font;
 import java.awt.BasicStroke;
 import java.awt.image.BufferedImage;
 
-import unus.item.*;
+import unus.entity.*;
 
 public class UI
 {
@@ -56,7 +56,7 @@ public class UI
 
         Papyrus_25P = new Font("Papyrus", Font.PLAIN, 25);
 
-        Item heart = new Heart(game);
+        Entity heart = new Heart(game);
         heart_full = heart.image;
         heart_half = heart.image1;
         heart_empty = heart.image2;

@@ -22,6 +22,13 @@ public class Oldman extends Entity
         this.speed = 1;
         this.direction = Direction.Down;
 
+        this.hitbox.x = 0;
+        this.hitbox.y = 16;
+        this.hitbox.width = 48;
+        this.hitbox.height = 32;
+        this.hitbox_default_x = this.hitbox.x;
+        this.hitbox_default_y = this.hitbox.y;
+
         setImages();
         setDialoques();
     }

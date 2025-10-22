@@ -20,9 +20,12 @@ public class Entity
     public int life;
 
     public BufferedImage up0, up1, down0, down1, left0, left1, right0, right1;
+    public BufferedImage image, image1, image2;
+    public Type type;
     public Direction direction;
     public Rectangle hitbox;
     public boolean collision = false;
+    public boolean solid = false;
 
     int speed;
     int sprite_counter = 0;
@@ -37,6 +40,8 @@ public class Entity
     {
         this.game = game;
         this.hitbox = new Rectangle(0, 0, 48, 48);
+        this.type = Type.None;
+        this.direction = Direction.Down;
     }
 
     public int getSpeed()

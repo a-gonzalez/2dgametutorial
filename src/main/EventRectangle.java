@@ -8,8 +8,8 @@ public class EventRectangle extends Rectangle
     int hitbox_default_y;
     boolean complete = false;
 
-    /*public EventRectangle()
+    public EventRectangle(int x, int y, int width, int height)
     {
-        super();
-    }*/
+        super(x, y, width, height);
+    }
 }

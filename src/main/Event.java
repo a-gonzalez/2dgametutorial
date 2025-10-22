@@ -21,19 +21,13 @@ public class Event
     private void initialize()
     {
         events = new EventRectangle[game.WORLD_COLUMNS][game.WORLD_ROWS];
-        /*hitbox = new Rectangle(23, 23, 2, 2);
-        hitbox_default_x = hitbox.x;
-        hitbox_default_y = hitbox.y;*/
+
         int column = 0;
         int row = 0;
 
         while (column < game.WORLD_COLUMNS && row < game.WORLD_ROWS)
         {
-            events[column][row] = new EventRectangle();
-            events[column][row].x = 23;
-            events[column][row].y = 23;
-            events[column][row].width = 2;
-            events[column][row].height = 2;
+            events[column][row] = new EventRectangle(23, 23, 2, 2);
             events[column][row].hitbox_default_x = events[column][row].x;
             events[column][row].hitbox_default_y = events[column][row].y;
 

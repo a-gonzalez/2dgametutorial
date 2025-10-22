@@ -1,7 +1,6 @@
 package unus.main;
 
 import unus.entity.Entity;
-import unus.item.OpenedChest;
 
 public class Bump
 {
