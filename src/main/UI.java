@@ -18,10 +18,10 @@ public class UI
     BufferedImage heart_full, heart_half, heart_empty;
     Option option = Option.New;
     Font Papyrus_25P;
-    int message_counter = 0;
+    //int message_counter = 0;
     public boolean game_complete = false;
     public boolean show_message = false;
-    public String message = "";
+    //public String message = "";
     public String dialoque = "";
 
     //Font pixel_zone, super_pixel;
@@ -62,11 +62,11 @@ public class UI
         heart_empty = heart.image2;
     }
 
-    public void displayMessage(String message)
+    /*public void displayMessage(String message)
     {
         this.message = message;
         this.show_message = true;
-    }
+    }*/
 
     public void draw(Graphics2D g2d)
     {
@@ -84,7 +84,7 @@ public class UI
         {
             drawPlayerLife();
 
-            if (show_message)
+            /*if (show_message)
             {
                 int length = (int) g2d.getFontMetrics().getStringBounds(message, g2d).getWidth();
                 int x = (game.SCREEN_WIDTH / 2) - (length / 2);
@@ -99,7 +99,7 @@ public class UI
                     show_message = false;
                     message_counter = 0;
                 }
-            }
+            }*/
         }
         
         if (game.state == State.Pause)

@@ -5,7 +5,7 @@ import java.awt.event.KeyListener;
 
 public class Control implements KeyListener
 {
-    private Direction direction;
+    Direction direction;
     private Game game;
 
     public boolean enter_pressed = false;
