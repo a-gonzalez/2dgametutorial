@@ -30,77 +30,34 @@ public class Bump
                 { // simulating entiry's movement and check where it will be after it moves
                     case Up :
                     {
-                        entity.hitbox.y -= entity.getSpeed();
-
-                        if (entity.hitbox.intersects(game.items[index].hitbox))
-                        {
-                            if (game.items[index].solid/* && game.items[index].getClass() != OpenedChest.class*/)
-                            {
-                                entity.collision = true;
-                            }
-
-                            if (player)
-                            { // make sure only the player is interacting with items
-                                result = index;
-                            }
-                        }
-                        break;
+                        entity.hitbox.y -= entity.getSpeed(); break;
                     }
                     case Down :
                     {
-                        entity.hitbox.y += entity.getSpeed();
-
-                        if (entity.hitbox.intersects(game.items[index].hitbox))
-                        {
-                            if (game.items[index].solid)
-                            {
-                                entity.collision = true;
-                            }
-
-                            if (player)
-                            { // make sure only the player interacts with items
-                                result = index;
-                            }
-                        }
-                        break;
+                        entity.hitbox.y += entity.getSpeed(); break;
                     }
                     case Right :
                     {
-                        entity.hitbox.x += entity.getSpeed();
-
-                        if (entity.hitbox.intersects(game.items[index].hitbox))
-                        {
-                            if (game.items[index].solid)
-                            {
-                                entity.collision = true;
-                            }
-
-                            if (player)
-                            { // make sure only the player is interacting with items
-                                result = index;
-                            }
-                        }
-                        break;
+                        entity.hitbox.x += entity.getSpeed(); break;
                     }
                     case Left :
                     {
-                        entity.hitbox.x -= entity.getSpeed();
-                        
-                        if (entity.hitbox.intersects(game.items[index].hitbox))
-                        {
-                            if (game.items[index].solid)
-                            {
-                                entity.collision = true;
-                            }
-
-                            if (player)
-                            { // make sure only the player is interacting with items
-                                result = index;
-                            }
-                        }
-                        break;
+                        entity.hitbox.x -= entity.getSpeed(); break;
                     }
-                } // reset values after check
+                }
+                
+                if (entity.hitbox.intersects(game.items[index].hitbox))
+                {
+                    if (game.items[index].solid/* && game.items[index].getClass() != OpenedChest.class*/)
+                    {
+                        entity.collision = true;
+                    }
+
+                    if (player)
+                    { // make sure only the player is interacting with items
+                        result = index;
+                    }
+                }// reset values after check
                 entity.hitbox.x = entity.hitbox_default_x;
                 entity.hitbox.y = entity.hitbox_default_y;
 
@@ -197,49 +154,30 @@ public class Bump
                 { // simulating entiry's movement and check where it will be after it moves
                     case Up :
                     {
-                        entity.hitbox.y -= entity.getSpeed();
-
-                        if (entity.hitbox.intersects(target[index].hitbox))
-                        {
-                            entity.collision = true;
-                            result = index;
-                        }
-                        break;
+                        entity.hitbox.y -= entity.getSpeed(); break;
                     }
                     case Down :
                     {
-                        entity.hitbox.y += entity.getSpeed();
-
-                        if (entity.hitbox.intersects(target[index].hitbox))
-                        {
-                            entity.collision = true;
-                            result = index;
-                        }
-                        break;
+                        entity.hitbox.y += entity.getSpeed(); break;
                     }
                     case Right :
                     {
-                        entity.hitbox.x += entity.getSpeed();
-
-                        if (entity.hitbox.intersects(target[index].hitbox))
-                        {
-                            entity.collision = true;
-                            result = index;
-                        }
-                        break;
+                        entity.hitbox.x += entity.getSpeed(); break;
                     }
                     case Left :
                     {
-                        entity.hitbox.x -= entity.getSpeed();
-                        
-                        if (entity.hitbox.intersects(target[index].hitbox))
-                        {
-                            entity.collision = true;
-                            result = index;
-                        }
-                        break;
+                        entity.hitbox.x -= entity.getSpeed(); break;
                     }
-                } // reset values after check
+                }
+                
+                if (entity.hitbox.intersects(target[index].hitbox))
+                {
+                    if (target[index] != entity)
+                    {
+                        entity.collision = true;
+                        result = index;
+                    }
+                }// reset values after check
                 entity.hitbox.x = entity.hitbox_default_x;
                 entity.hitbox.y = entity.hitbox_default_y;
 
@@ -250,8 +188,10 @@ public class Bump
         return result;
     }
 
-    public void checkPlayer(Entity entity)
+    public boolean checkPlayer(Entity entity)
     {
+        boolean result = false;
+
         entity.hitbox.x = entity.world_x + entity.hitbox.x;
         entity.hitbox.y = entity.world_y + entity.hitbox.y;
 
@@ -262,49 +202,33 @@ public class Bump
         {
             case Up :
             {
-                entity.hitbox.y -= entity.getSpeed();
-
-                if (entity.hitbox.intersects(game.player.hitbox))
-                {
-                    entity.collision = true;
-                }
-                break;
+                entity.hitbox.y -= entity.getSpeed(); break;
             }
             case Down :
             {
-                entity.hitbox.y += entity.getSpeed();
-
-                if (entity.hitbox.intersects(game.player.hitbox))
-                {
-                    entity.collision = true;
-                }
-                break;
+                entity.hitbox.y += entity.getSpeed(); break;
             }
             case Right :
             {
-                entity.hitbox.x += entity.getSpeed();
-
-                if (entity.hitbox.intersects(game.player.hitbox))
-                {
-                    entity.collision = true;
-                }
-                break;
+                entity.hitbox.x += entity.getSpeed(); break;
             }
             case Left :
             {
-                entity.hitbox.x -= entity.getSpeed();
-                
-                if (entity.hitbox.intersects(game.player.hitbox))
-                {
-                    entity.collision = true;
-                }
-                break;
+                entity.hitbox.x -= entity.getSpeed(); break;
             }
-        } // reset values after check
+        }
+        if (entity.hitbox.intersects(game.player.hitbox))
+        {
+            entity.collision = true;
+
+            result = true;
+        }// reset values after check
         entity.hitbox.x = entity.hitbox_default_x;
         entity.hitbox.y = entity.hitbox_default_y;
 
         game.player.hitbox.x = game.player.hitbox_default_x;
         game.player.hitbox.y = game.player.hitbox_default_y;
+
+        return result;
     }
 }

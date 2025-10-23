@@ -8,7 +8,7 @@ public class Key extends Entity
     {
         super(game);
 
-        this.type = Type.Key;
-        this.down0 = setup("/resources/image/item/key.png");
+        type = Type.Key;
+        down0 = setup("/resources/image/item/key.png");
     }
 }

@@ -26,8 +26,10 @@ public class Entity
     public Rectangle hitbox;
     public boolean collision = false;
     public boolean solid = false;
-
-    int speed;
+    public boolean invincible = false;
+    public int invincible_counter = 0;
+    public int speed;
+    
     int sprite_counter = 0;
     int sprite_number = 0;
 
@@ -92,7 +94,18 @@ public class Entity
 
         game.bump.checkTile(this);
         game.bump.checkItem(this, false);
-        game.bump.checkPlayer(this);
+        game.bump.checkEntity(this, game.npc);
+        game.bump.checkEntity(this, game.monsters);
+        boolean contact = game.bump.checkPlayer(this);
+
+        if (contact == true && (this.type == Type.Redslime || this.type == Type.Greenslime))
+        { // if a monster hits player and player is not invincible give damage
+            if (game.player.invincible == false)
+            {
+                game.player.life--;
+                game.player.invincible = true;
+            }
+        }
 
         if (collision == false)
         { // if no collision, player can move

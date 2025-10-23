@@ -8,9 +8,9 @@ public class IronDoor extends Entity
     {
         super(game);
 
-        this.type = Type.Key;
-        this.down0 = setup("/resources/image/item/door_iron.png");
-        this.solid = true;
+        type = Type.Key;
+        solid = true;
+        down0 = setup("/resources/image/item/door_iron.png");
 
         /*this.hitbox.x = 0;
         this.hitbox.y = 16;

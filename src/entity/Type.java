@@ -9,5 +9,7 @@ public enum Type
     ChestOpened,
     Boot,
     Heart,
+    Greenslime,
+    Redslime,
     None
 }

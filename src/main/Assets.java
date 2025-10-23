@@ -1,6 +1,7 @@
 package unus.main;
 
 import unus.entity.*;
+import unus.monster.*;
 
 public class Assets
 {// this class will handle all the game assets (door, boot, key, etc...)
@@ -13,7 +14,6 @@ public class Assets
 
     public void setItems()
     {
-
         game.items[0] = new Chest(game);
         game.items[0].world_x = game.TILE_SIZE * 12;
         game.items[0].world_y = game.TILE_SIZE * 8;
@@ -36,5 +36,16 @@ public class Assets
         game.npc[2] = new Oldman(game);
         game.npc[2].world_x = game.TILE_SIZE * 38;
         game.npc[2].world_y = game.TILE_SIZE * 8;
+    }
+
+    public void setMonsters()
+    {
+        game.monsters[0] = new Greenslime(game);
+        game.monsters[0].world_x = game.TILE_SIZE * 23;
+        game.monsters[0].world_y = game.TILE_SIZE * 36;
+
+        game.monsters[1] = new Redslime(game);
+        game.monsters[1].world_x = game.TILE_SIZE * 24;
+        game.monsters[1].world_y = game.TILE_SIZE * 34;
     }
 }

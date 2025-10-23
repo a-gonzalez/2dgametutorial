@@ -4,9 +4,9 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.Rectangle;
+import java.awt.AlphaComposite;
 
 import unus.main.*;
-import unus.item.*;
 
 public class Player extends Entity
 {
@@ -76,6 +76,18 @@ public class Player extends Entity
         }
     }
 
+    public void contactMonster(int index)
+    {
+        if (index != 999)
+        {
+            if (invincible == false)
+            {
+                --life;
+                invincible = true;
+            }
+        }
+    }
+
     public void update()
     {
         Direction direction = control.getDirection();
@@ -97,6 +109,10 @@ public class Player extends Entity
             index = game.bump.checkEntity(this, game.npc);
 
             contactNPC(index);
+
+            index = game.bump.checkEntity(this, game.monsters);
+
+            contactMonster(index);
 
             // check events
             game.event.check();
@@ -151,6 +167,17 @@ public class Player extends Entity
                 idle_counter = 0;
             }
         }
+
+        if (invincible == true)
+        {
+            ++invincible_counter;
+
+            if (invincible_counter > 60)
+            {
+                invincible = false;
+                invincible_counter = 0;
+            }
+        }
     }
 
     public void draw(Graphics2D g2d)
@@ -176,7 +203,16 @@ public class Player extends Entity
                 image = (sprite_number == 0) ? down0 : down1; break;
             }
         }
+
+        if (invincible == true)
+        {
+            g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
+        }
+
         g2d.drawImage(image, screen_x, screen_y, null);
+
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 01f));
+
         g2d.setColor(Color.GREEN);
         g2d.drawRect(screen_x + hitbox.x, screen_y + hitbox.y, hitbox.width, hitbox.height);
     }

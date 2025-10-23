@@ -47,6 +47,7 @@ public class Game extends JPanel implements Runnable
     public Player player = new Player(this, control);
     public Entity[] items = new Entity[10];
     public Entity[] npc = new Entity[10];
+    public Entity[] monsters = new Entity[10];
 
     ArrayList<Entity> list = new ArrayList<Entity>();
 
@@ -68,6 +69,7 @@ public class Game extends JPanel implements Runnable
     {
         assets.setItems();
         assets.setNPCs();
+        assets.setMonsters();
 
         //playMusic(0);
 
@@ -111,6 +113,14 @@ public class Game extends JPanel implements Runnable
                     npc[index].update();
                 }
             }
+
+            for (int index = 0; index < monsters.length; index++)
+            {
+                if (monsters[index] != null)
+                {
+                    monsters[index].update();
+                }
+            }
         }
     }
 
@@ -129,21 +139,27 @@ public class Game extends JPanel implements Runnable
 
             list.add(player);
 
-            for (int index = 0; index < npc.length; index++)
+            for (Entity entity : npc)
             {
-                if (npc[index] != null)
+                if (entity != null)
                 {
-                    list.add(npc[index]);
+                    list.add(entity);
                 }
             }
 
-            for (int index = 0; index < items.length; index++)
+            for (Entity entity : items)
             {
-                if (items[index] != null)
+                if (entity != null)
                 {
-                    list.add(items[index]);
+                    list.add(entity);
+                }
+            }
 
-                    //System.out.println(items[index].getClass().getName());
+            for (Entity entity : monsters)
+            {
+                if (entity != null)
+                {
+                    list.add(entity);
                 }
             }
 

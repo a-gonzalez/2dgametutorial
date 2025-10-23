@@ -8,8 +8,8 @@ public class Door extends Entity
     {
         super(game);
 
-        this.type = Type.Key;
-        this.down0 = setup("/resources/image/item/door.png");
-        this.solid = true;
+        type = Type.Key;
+        solid = true;
+        down0 = setup("/resources/image/item/door.png");
     }
 }
