@@ -11,5 +11,7 @@ public enum Type
     Heart,
     Greenslime,
     Redslime,
+    Bat,
+    Monster,
     None
 }

@@ -95,11 +95,11 @@ public class Event
                 damagePit();
             }
 
-            if (hit(23, 19, Direction.Any))
+            /*if (hit(23, 19, Direction.Any))
             {
                 //damagePit(23, 19, State.Dialoque);
                 damagePit();
-            }
+            }*/
 
             if (hit(23, 12, Direction.Up))
             {

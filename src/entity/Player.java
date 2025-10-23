@@ -92,7 +92,7 @@ public class Player extends Entity
     {
         Direction direction = control.getDirection();
 
-        if (direction != Direction.Idle)
+        if (direction != Direction.Idle/* || control.enter_pressed == true*/)
         {
             this.direction = direction;
 
@@ -110,6 +110,7 @@ public class Player extends Entity
 
             contactNPC(index);
 
+            // check monster collision
             index = game.bump.checkEntity(this, game.monsters);
 
             contactMonster(index);
@@ -119,7 +120,7 @@ public class Player extends Entity
 
             game.control.enter_pressed = false;
 
-            if (collision == false)
+            if (collision == false /*&& control.enter_pressed == false*/)
             { // if no collision, player can move
                 switch (this.direction)
                 {
@@ -141,6 +142,8 @@ public class Player extends Entity
                     }
                 }
             }
+            //game.control.enter_pressed = false;
+
             sprite_counter++;
 
             if (sprite_counter > 14)
@@ -159,7 +162,7 @@ public class Player extends Entity
         }
         else
         {
-            idle_counter++;
+            ++idle_counter;
 
             if (idle_counter > 30)
             {
@@ -208,10 +211,8 @@ public class Player extends Entity
         {
             g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
         }
-
         g2d.drawImage(image, screen_x, screen_y, null);
-
-        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 01f));
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 
         g2d.setColor(Color.GREEN);
         g2d.drawRect(screen_x + hitbox.x, screen_y + hitbox.y, hitbox.width, hitbox.height);

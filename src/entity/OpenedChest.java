@@ -8,7 +8,7 @@ public class OpenedChest extends Entity
     {
         super(game);
 
-        type = Type.Key;
+        type = Type.ChestOpened;
         solid = true;
         down0 = setup("/resources/image/item/chest_opened.png");
     }

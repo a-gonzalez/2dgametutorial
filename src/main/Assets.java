@@ -47,5 +47,9 @@ public class Assets
         game.monsters[1] = new Redslime(game);
         game.monsters[1].world_x = game.TILE_SIZE * 24;
         game.monsters[1].world_y = game.TILE_SIZE * 34;
+
+        game.monsters[2] = new Redslime(game);
+        game.monsters[2].world_x = game.TILE_SIZE * 12;
+        game.monsters[2].world_y = game.TILE_SIZE * 9;
     }
 }

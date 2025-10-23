@@ -98,7 +98,7 @@ public class Entity
         game.bump.checkEntity(this, game.monsters);
         boolean contact = game.bump.checkPlayer(this);
 
-        if (contact == true && (this.type == Type.Redslime || this.type == Type.Greenslime))
+        if (contact == true && this.type == Type.Monster)
         { // if a monster hits player and player is not invincible give damage
             if (game.player.invincible == false)
             {

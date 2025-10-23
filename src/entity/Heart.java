@@ -9,8 +9,8 @@ public class Heart extends Entity
         super(game);
 
         type = Type.Heart;
-        image = setup("/resources/image/item/heart_full.png");
-        image1 = setup("/resources/image/item/heart_half.png");
-        image2 = setup("/resources/image/item/heart_empty.png");
+        image = setup("/resources/image/item/heart/full.png");
+        image1 = setup("/resources/image/item/heart/half.png");
+        image2 = setup("/resources/image/item/heart/empty.png");
     }
 }

@@ -83,13 +83,13 @@ public class Oldman extends Entity
 
     private void setImages()
     {
-        down0 = setup("/resources/image/npc/oldman_down0.png");
-        down1 = setup("/resources/image/npc/oldman_down1.png");
-        up0 = setup("/resources/image/npc/oldman_up0.png");
-        up1 = setup("/resources/image/npc/oldman_up1.png");
-        left0 = setup("/resources/image/npc/oldman_left0.png");
-        left1 = setup("/resources/image/npc/oldman_left1.png");
-        right0 = setup("/resources/image/npc/oldman_right0.png");
-        right1 = setup("/resources/image/npc/oldman_right1.png");
+        down0 = setup("/resources/image/npc/oldman/down0.png");
+        down1 = setup("/resources/image/npc/oldman/down1.png");
+        up0 = setup("/resources/image/npc/oldman/up0.png");
+        up1 = setup("/resources/image/npc/oldman/up1.png");
+        left0 = setup("/resources/image/npc/oldman/left0.png");
+        left1 = setup("/resources/image/npc/oldman/left1.png");
+        right0 = setup("/resources/image/npc/oldman/right0.png");
+        right1 = setup("/resources/image/npc/oldman/right1.png");
     }
 }

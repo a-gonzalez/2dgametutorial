@@ -16,10 +16,10 @@ public class Redslime extends Entity
 
     private void initialize()
     {
-        type = Type.Redslime;
+        type = Type.Monster;
         speed = 1;
         life_max = 4;
-        life = this.life_max;
+        life = life_max;
 
         hitbox.x = 3;
         hitbox.y = 18;
@@ -33,14 +33,14 @@ public class Redslime extends Entity
 
     private void setImages()
     {
-        up0 = setup("/resources/image/monster/redslime_down0.png");
-        up1 = setup("/resources/image/monster/redslime_down1.png");
-        down0 = setup("/resources/image/monster/redslime_down0.png");
-        down1 = setup("/resources/image/monster/redslime_down1.png");
-        left0 = setup("/resources/image/monster/redslime_down0.png");
-        left1 = setup("/resources/image/monster/redslime_down1.png");
-        right0 = setup("/resources/image/monster/redslime_down0.png");
-        right1 = setup("/resources/image/monster/redslime_down1.png");
+        up0 = setup("/resources/image/monster/slime/red_down0.png");
+        up1 = setup("/resources/image/monster/slime/red_down1.png");
+        down0 = setup("/resources/image/monster/slime/red_down0.png");
+        down1 = setup("/resources/image/monster/slime/red_down1.png");
+        left0 = setup("/resources/image/monster/slime/red_down0.png");
+        left1 = setup("/resources/image/monster/slime/red_down1.png");
+        right0 = setup("/resources/image/monster/slime/red_down0.png");
+        right1 = setup("/resources/image/monster/slime/red_down1.png");
     }
 
     public void setAction()

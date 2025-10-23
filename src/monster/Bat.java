@@ -5,9 +5,9 @@ import java.util.Random;
 import unus.entity.*;
 import unus.main.*;
 
-public class Greenslime extends Entity
+public class Bat extends Entity
 {
-    public Greenslime(Game game)
+    public Bat(Game game)
     {
         super(game);
 
@@ -18,7 +18,7 @@ public class Greenslime extends Entity
     {
         type = Type.Monster;
         speed = 1;
-        life_max = 4;
+        life_max = 2;
         life = life_max;
 
         hitbox.x = 3;
@@ -33,14 +33,14 @@ public class Greenslime extends Entity
 
     private void setImages()
     {
-        up0 = setup("/resources/image/monster/slime/green_down0.png");
-        up1 = setup("/resources/image/monster/slime/green_down1.png");
-        down0 = setup("/resources/image/monster/slime/green_down0.png");
-        down1 = setup("/resources/image/monster/slime/green_down1.png");
-        left0 = setup("/resources/image/monster/slime/green_down0.png");
-        left1 = setup("/resources/image/monster/slime/green_down1.png");
-        right0 = setup("/resources/image/monster/slime/green_down0.png");
-        right1 = setup("/resources/image/monster/slime/green_down1.png");
+        up0 = setup("/resources/image/monster/bat/down0.png");
+        up1 = setup("/resources/image/monster/bat/down1.png");
+        down0 = setup("/resources/image/monster/bat/down0.png");
+        down1 = setup("/resources/image/monster/bat/down1.png");
+        left0 = setup("/resources/image/monster/bat/down0.png");
+        left1 = setup("/resources/image/monster/bat/down1.png");
+        right0 = setup("/resources/image/monster/bat/down0.png");
+        right1 = setup("/resources/image/monster/bat/down1.png");
     }
 
     public void setAction()
