@@ -4,7 +4,7 @@ import javax.swing.JFrame;
 //import java.awt.GraphicsEnvironment;
 
 public class Main
-{
+{//javac -d compiled $(find src -name *.java)
     public static void main(String[] arguments) throws Exception
     {
         Game game = new Game();

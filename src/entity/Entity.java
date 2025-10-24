@@ -3,38 +3,43 @@ package unus.entity;
 import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.Rectangle;
+import java.awt.AlphaComposite;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 import java.io.IOException;
 
 import unus.main.*;
 
-public class Entity
+public abstract class Entity
 {
-    public int world_x; 
-    public int world_y;
-    public int hitbox_default_x;
-    public int hitbox_default_y;
-    public int action_counter = 0;
-    public int life_max;
-    public int life;
-
     public BufferedImage up0, up1, down0, down1, left0, left1, right0, right1;
+    public BufferedImage attack_up0, attack_up1, attack_down0, attack_down1, attack_left0, attack_left1, attack_right0, attack_right1;
     public BufferedImage image, image1, image2;
-    public Type type;
-    public Direction direction;
     public Rectangle hitbox;
-    public boolean collision = false;
+    public Rectangle attack_hitbox = new Rectangle(0, 0, 0, 0);
+    public int hitbox_default_x, hitbox_default_y;
+    String[] dialoques = new String[10];
+
+    // state
+    public int world_x, world_y;
+    public Direction direction;
+    int sprite_number = 0;
     public boolean solid = false;
     public boolean invincible = false;
-    public int invincible_counter = 0;
-    public int speed;
-    
-    int sprite_counter = 0;
-    int sprite_number = 0;
-
-    String[] dialoques = new String[10];
     int dialoque_index = 0;
+    public boolean collision = false;
+    boolean attacking = false;
+
+    // counters
+    public int action_counter = 0;
+    int sprite_counter = 0;
+    int invincible_counter = 0;
+
+    // attributes
+    public Type type;
+    public int speed;
+    public int life_max;
+    public int life;
 
     Game game;
 
@@ -136,6 +141,17 @@ public class Entity
             sprite_number = (sprite_number == 0) ? 1 : 0;
             sprite_counter = 0;
         }
+
+        if (invincible == true)
+        {
+            ++invincible_counter;
+
+            if (invincible_counter > 40)
+            {
+                invincible = false;
+                invincible_counter = 0;
+            }
+        }
     }
 
     public void draw(Graphics2D g2d)
@@ -169,21 +185,39 @@ public class Entity
                         image = (sprite_number == 0) ? down0 : down1; break;
                     }
                 }
+
+                if (invincible == true)
+                {
+                    g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
+                }
                 g2d.drawImage(image, screen_x, screen_y, game.TILE_SIZE, game.TILE_SIZE, null);
-                g2d.setColor(Color.GREEN);
+                g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+
+                if (this.type == Type.Monster)
+                {
+                    g2d.setColor(Color.RED);
+                }
+                else
+                {
+                    g2d.setColor(Color.GREEN);
+                }
                 g2d.drawRect(screen_x + hitbox.x, screen_y + hitbox.y, hitbox.width, hitbox.height);
             }
     }
 
     public BufferedImage setup(String path)
     {
-        Utility util = new Utility();
+        return setup(path, game.TILE_SIZE, game.TILE_SIZE);
+    }
+
+    public BufferedImage setup(String path, int width, int height)
+    {
         BufferedImage image = null;
 
         try
         {
             image = ImageIO.read(getClass().getResourceAsStream(path));
-            image = util.scale(image, game.TILE_SIZE, game.TILE_SIZE);
+            image = new Utility().scale(image, width, height);
         }
         catch (IOException exception)
         {

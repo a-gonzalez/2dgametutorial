@@ -43,9 +43,19 @@ public class Player extends Entity
         life = life_max;
 
         setImages();
+
+        // increasing these number increases attack range (for cheating or different weapon types)
+        attack_hitbox.width = 36;
+        attack_hitbox.height = 36;
     }
 
     private void setImages()
+    {
+        getWalkingImages();
+        getAttackImages();
+    }
+
+    private void getWalkingImages()
     {
         up0 = setup("/resources/image/player/up0.png");
         up1 = setup("/resources/image/player/up1.png");
@@ -55,6 +65,20 @@ public class Player extends Entity
         right1 = setup("/resources/image/player/right1.png");
         left0 = setup("/resources/image/player/left0.png");
         left1 = setup("/resources/image/player/left1.png");
+    }
+
+    private void getAttackImages()
+    {
+        int size = 48;
+
+        attack_up0 = setup("/resources/image/player/attack_up0.png", size, size * 2);
+        attack_up1 = setup("/resources/image/player/attack_up1.png", size, size * 2);
+        attack_down0 = setup("/resources/image/player/attack_down0.png", size, size * 2);
+        attack_down1 = setup("/resources/image/player/attack_down1.png", size, size * 2);
+        attack_right0 = setup("/resources/image/player/attack_right0.png", size * 2, size);
+        attack_right1 = setup("/resources/image/player/attack_right1.png", size * 2, size);
+        attack_left0 = setup("/resources/image/player/attack_left0.png", size * 2, size);
+        attack_left1 = setup("/resources/image/player/attack_left1.png", size * 2, size);
     }
 
     public void grabItem(int index)
@@ -74,6 +98,31 @@ public class Player extends Entity
                 game.npc[index].speak();
             }
         }
+        else
+        {
+            if (game.control.space_pressed == true)
+            {
+                attacking = true;
+            }
+        }
+        /*if (game.control.enter_pressed == true)
+        {
+            if (index != 999)
+            {
+                if (game.control.enter_pressed == true)
+                {
+                    game.state = State.Dialoque;
+                    game.npc[index].speak();
+                }
+            }
+            else
+            {
+                if (game.control.enter_pressed == true)
+                {
+                    attacking = true;
+                }
+            }
+        }*/
     }
 
     public void contactMonster(int index)
@@ -88,13 +137,93 @@ public class Player extends Entity
         }
     }
 
+    public void attackMonster(int index)
+    {
+        if (index != 999)
+        {
+            if (game.monsters[index].invincible == false)
+            {
+                game.monsters[index].life -= 1;
+                game.monsters[index].invincible = true;
+
+                if (game.monsters[index].life <= 0)
+                {
+                    game.monsters[index] = null;
+                }
+            }
+        }
+    }
+
+    private void attack()
+    {
+        ++sprite_counter;
+
+        if (sprite_counter <= 5)
+        {// show attack sprite 1 during the 1st 5 frames (0 - 5)
+            sprite_number = 0;
+        }
+
+        if (sprite_counter > 5 && sprite_counter <= 25)
+        {// show attack sprite 2 for the next 20 frames (5 - 25)
+            sprite_number = 1;
+
+            // save current world x, y and hitbox width and height
+            int current_world_x = world_x;
+            int current_world_y = world_y;
+            int current_hitbox_width = hitbox.width;
+            int current_hitbox_height = hitbox.height;
+
+            switch (direction)
+            {// adjust player's world x and for the attack
+                case Up :
+                {
+                    world_y -= attack_hitbox.height; break;
+                }
+                case Down :
+                {
+                    world_y += attack_hitbox.height; break;
+                }
+                case Left :
+                {
+                    world_x -= attack_hitbox.width; break;
+                }
+                case Right:
+                {
+                    world_x += attack_hitbox.width; break;
+                }
+            }
+            // hitbox becomes attack hitbox
+            hitbox.width = attack_hitbox.width;
+            hitbox.height = attack_hitbox.height;
+            // check monster collision with weapon (the new world x, y and hitbox)
+            int index = game.bump.checkEntity(this, game.monsters);
+
+            attackMonster(index);
+
+            // after checking collision, reset to original values
+            world_x = current_world_x;
+            world_y = current_world_y;
+            hitbox.width = current_hitbox_width;
+            hitbox.height = current_hitbox_height;
+        }
+
+        if (sprite_counter > 25)
+        {// reset
+            sprite_number = 0;
+            sprite_counter = 0;
+            attacking = false;
+        }
+    }
+
     public void update()
     {
-        Direction direction = control.getDirection();
-
-        if (direction != Direction.Idle/* || control.enter_pressed == true*/)
+        if (attacking == true)
         {
-            this.direction = direction;
+            attack();
+        }
+        else if (control.getDirection() != Direction.Idle/* || control.enter_pressed == true*/)
+        {
+            this.direction = control.getDirection();
 
             collision = false;
 
@@ -186,24 +315,62 @@ public class Player extends Entity
     public void draw(Graphics2D g2d)
     {
         BufferedImage image = null;
+        int temp_screen_x = screen_x;
+        int temp_screen_y = screen_y;
 
         switch (direction)
         {
             case Right :
             {
-                image = (sprite_number == 0) ? right0 : right1; break;
+                if (attacking == true)
+                {
+                    image = (sprite_number == 0) ? attack_right0 : attack_right1;
+                }
+                else
+                {
+                    image = (sprite_number == 0) ? right0 : right1;
+                }
+                break;
             }
             case Left :
             {
-                image = (sprite_number == 0) ? left0 : left1; break;
+                if (attacking == true)
+                {
+                    temp_screen_x = screen_x - game.TILE_SIZE;
+
+                    image = (sprite_number == 0) ? attack_left0 : attack_left1;
+                }
+                else
+                {
+                    image = (sprite_number == 0) ? left0 : left1;
+                }
+                break;
             }
             case Up :
             {
-                image = (sprite_number == 0) ? up0 : up1; break;
+                if (attacking == true)
+                {
+                    temp_screen_y = screen_y - game.TILE_SIZE;
+
+                    image = (sprite_number == 0) ? attack_up0 : attack_up1;
+                }
+                else
+                {
+                    image = (sprite_number == 0) ? up0 : up1;
+                }
+                break;
             }
             case Down :
             {
-                image = (sprite_number == 0) ? down0 : down1; break;
+                if (attacking == true)
+                {
+                    image = (sprite_number == 0) ? attack_down0 : attack_down1;
+                }
+                else
+                {
+                    image = (sprite_number == 0) ? down0 : down1;
+                }
+                break;
             }
         }
 
@@ -211,7 +378,7 @@ public class Player extends Entity
         {
             g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.3f));
         }
-        g2d.drawImage(image, screen_x, screen_y, null);
+        g2d.drawImage(image, temp_screen_x, temp_screen_y, null);
         g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
 
         g2d.setColor(Color.GREEN);

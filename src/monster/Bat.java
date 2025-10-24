@@ -21,10 +21,10 @@ public class Bat extends Entity
         life_max = 2;
         life = life_max;
 
-        hitbox.x = 3;
-        hitbox.y = 18;
+        hitbox.x = 4;
+        hitbox.y = 14;
         hitbox.width = 42;
-        hitbox.height = 30;
+        hitbox.height = 20;
         hitbox_default_x = hitbox.x;
         hitbox_default_y = hitbox.y;
 

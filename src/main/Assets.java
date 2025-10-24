@@ -25,13 +25,13 @@ public class Assets
 
     public void setNPCs()
     {
-        game.npc[0] = new Oldman(game);
+        /*game.npc[0] = new Oldman(game);
         game.npc[0].world_x = game.TILE_SIZE * 21;
         game.npc[0].world_y = game.TILE_SIZE * 21;
 
         game.npc[1] = new Oldman(game);
         game.npc[1].world_x = game.TILE_SIZE * 12;
-        game.npc[1].world_y = game.TILE_SIZE * 33;
+        game.npc[1].world_y = game.TILE_SIZE * 33;*/
 
         game.npc[2] = new Oldman(game);
         game.npc[2].world_x = game.TILE_SIZE * 38;
@@ -48,8 +48,20 @@ public class Assets
         game.monsters[1].world_x = game.TILE_SIZE * 24;
         game.monsters[1].world_y = game.TILE_SIZE * 34;
 
-        game.monsters[2] = new Redslime(game);
+        game.monsters[2] = new Bat(game);
         game.monsters[2].world_x = game.TILE_SIZE * 12;
         game.monsters[2].world_y = game.TILE_SIZE * 9;
+
+        game.monsters[3] = new Bat(game);
+        game.monsters[3].world_x = game.TILE_SIZE * 12;
+        game.monsters[3].world_y = game.TILE_SIZE * 10;
+
+        game.monsters[4] = new Orc(game);
+        game.monsters[4].world_x = game.TILE_SIZE * 12;
+        game.monsters[4].world_y = game.TILE_SIZE * 33;
+
+        game.monsters[5] = new Skeleton(game);
+        game.monsters[5].world_x = game.TILE_SIZE * 36;
+        game.monsters[5].world_y = game.TILE_SIZE * 33;
     }
 }

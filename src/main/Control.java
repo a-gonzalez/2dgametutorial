@@ -9,6 +9,7 @@ public class Control implements KeyListener
     private Game game;
 
     public boolean enter_pressed = false;
+    public boolean space_pressed = false;
 
     public Control(Game game)
     {
@@ -117,6 +118,10 @@ public class Control implements KeyListener
                 {
                     enter_pressed = true;
                 }
+                case KeyEvent.VK_SPACE :
+                {
+                    space_pressed = true;
+                }
             }
         }
         else if (game.state == State.Pause)
@@ -162,6 +167,10 @@ public class Control implements KeyListener
                 case KeyEvent.VK_S :
                 {
                     direction = Direction.Idle; break;
+                }
+                case KeyEvent.VK_SPACE :
+                {
+                    space_pressed = false; break;
                 }
             }
         }
