@@ -102,6 +102,7 @@ public class Player extends Entity
         {
             if (game.control.space_pressed == true)
             {
+                //game.playSE(8);
                 attacking = true;
             }
         }
@@ -131,6 +132,7 @@ public class Player extends Entity
         {
             if (invincible == false)
             {
+                game.playSE(7);
                 --life;
                 invincible = true;
             }
@@ -143,12 +145,14 @@ public class Player extends Entity
         {
             if (game.monsters[index].invincible == false)
             {
+                game.playSE(6);
                 game.monsters[index].life -= 1;
                 game.monsters[index].invincible = true;
+                game.monsters[index].damageReaction();
 
                 if (game.monsters[index].life <= 0)
                 {
-                    game.monsters[index] = null;
+                    game.monsters[index].dying = true;
                 }
             }
         }

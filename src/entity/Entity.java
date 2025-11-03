@@ -29,11 +29,16 @@ public abstract class Entity
     int dialoque_index = 0;
     public boolean collision = false;
     boolean attacking = false;
+    public boolean alive = true;
+    public boolean dying = false;
+    boolean health_bar_show = false;
 
     // counters
     public int action_counter = 0;
     int sprite_counter = 0;
     int invincible_counter = 0;
+    int dying_counter = 0;
+    int health_bar_counter = 0;
 
     // attributes
     public Type type;
@@ -58,6 +63,12 @@ public abstract class Entity
 
     public void setAction()
     {
+    }
+
+    public void damageReaction()
+    {
+        action_counter = 0;
+        direction = game.player.direction;
     }
 
     public void speak()
@@ -89,6 +100,64 @@ public abstract class Entity
                 direction = Direction.Right; break;
             }
         }
+    }
+
+    public void dyingAnimation(Graphics2D g2d)
+    {
+        ++dying_counter;
+
+        int increment = 5;
+
+        if (dying_counter <= increment)
+        {
+            changeAlpha(g2d, 0f);
+        }
+
+        if (dying_counter > increment && dying_counter <= increment * 2)
+        {
+            changeAlpha(g2d, 1f);
+        }
+
+        if (dying_counter > increment * 2 && dying_counter <= increment * 3)
+        {
+            changeAlpha(g2d, 0f);
+        }
+
+        if (dying_counter > increment * 3 && dying_counter <= increment * 4)
+        {
+            changeAlpha(g2d, 1f);
+        }
+
+        if (dying_counter > increment * 4 && dying_counter <= increment * 5)
+        {
+            changeAlpha(g2d, 0f);
+        }
+
+        if (dying_counter > increment * 5 && dying_counter <= increment * 6)
+        {
+            changeAlpha(g2d, 1f);
+        }
+
+        if (dying_counter > increment * 6 && dying_counter <= increment * 7)
+        {
+            changeAlpha(g2d, 0f);
+        }
+
+        if (dying_counter > increment * 7 && dying_counter <= increment * 8)
+        {
+            changeAlpha(g2d, 1f);
+        
+            if (dying_counter >= increment * 8)
+            {
+                dying = false;
+                alive = false;
+            }
+        }
+    }
+
+    public void changeAlpha(Graphics2D g2d, float alpha)
+    {
+        g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, alpha));
     }
 
     public void update()
@@ -186,12 +255,40 @@ public abstract class Entity
                     }
                 }
 
+
+                if (type == Type.Monster && health_bar_show == true)
+                {// health bar
+                    double bar = (double) game.TILE_SIZE / life_max;
+                    double health = bar * life;
+
+                    g2d.setColor(new Color(35, 35, 35));
+                    g2d.fillRect(screen_x - 1, screen_y - 16, game.TILE_SIZE + 2, 12);
+                    g2d.setColor(new Color(255, 0, 30));
+                    g2d.fillRect(screen_x, screen_y - 15, (int) health, 10);
+
+                    ++health_bar_counter;
+
+                    if (health_bar_counter > 400)
+                    {
+                        health_bar_counter = 0;
+                        health_bar_show = false;
+                    }
+                }
+
                 if (invincible == true)
                 {
-                    g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.4f));
+                    health_bar_show = true;
+                    health_bar_counter = 0;
+
+                    changeAlpha(g2d, 0.4f);
+                }
+
+                if (dying == true)
+                {
+                    dyingAnimation(g2d);
                 }
                 g2d.drawImage(image, screen_x, screen_y, game.TILE_SIZE, game.TILE_SIZE, null);
-                g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 1f));
+                changeAlpha(g2d, 1f);
 
                 if (this.type == Type.Monster)
                 {

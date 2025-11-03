@@ -118,7 +118,15 @@ public class Game extends JPanel implements Runnable
             {
                 if (monsters[index] != null)
                 {
-                    monsters[index].update();
+                    if (monsters[index].alive == true && monsters[index].dying == false)
+                    {
+                        monsters[index].update();
+                    }
+
+                    if (monsters[index].alive == false)
+                    {
+                        monsters[index] = null;
+                    }
                 }
             }
         }
@@ -139,27 +147,27 @@ public class Game extends JPanel implements Runnable
 
             list.add(player);
 
-            for (Entity entity : npc)
+            for (int index = 0; index < npc.length; index++)
             {
-                if (entity != null)
+                if (npc[index] != null)
                 {
-                    list.add(entity);
+                    list.add(npc[index]);
                 }
             }
 
-            for (Entity entity : items)
+            for (int index = 0; index < items.length; index++)
             {
-                if (entity != null)
+                if (items[index] != null)
                 {
-                    list.add(entity);
+                    list.add(items[index]);
                 }
             }
 
-            for (Entity entity : monsters)
+            for (int index = 0; index < monsters.length; index++)
             {
-                if (entity != null)
+                if (monsters[index] != null)
                 {
-                    list.add(entity);
+                    list.add(monsters[index]);
                 }
             }
 
