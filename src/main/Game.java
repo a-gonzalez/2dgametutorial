@@ -8,6 +8,7 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.logging.*;
 
 //import java.lang.InterruptedException;
 
@@ -51,6 +52,8 @@ public class Game extends JPanel implements Runnable
 
     ArrayList<Entity> list = new ArrayList<Entity>();
 
+    private static Logger logger = Logger.getLogger("unus.log");
+
     public Game()
     {
         initialize();
@@ -58,6 +61,8 @@ public class Game extends JPanel implements Runnable
 
     public void initialize()
     {
+        logger.fine("Game initialize...");
+
         this.setPreferredSize(new Dimension(SCREEN_WIDTH, SCREEN_HEIGHT));
         this.setBackground(Color.BLACK);
         this.setDoubleBuffered(true); // better rendering performance for 2d games

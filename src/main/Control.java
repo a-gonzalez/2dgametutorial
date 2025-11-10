@@ -30,113 +30,28 @@ public class Control implements KeyListener
 
     @Override
     public void keyPressed(KeyEvent event)
-    {
+    {  
+        int code = event.getKeyCode();
         //System.out.println(String.format("KeyPressed: %d", event.getKeyCode()));
         if (game.state == State.Title)
         {
-            if (event.getKeyCode() == KeyEvent.VK_UP || event.getKeyCode() == event.VK_W)
-            {
-                if (game.ui.option == Option.New)
-                {
-                    game.ui.option = Option.Quit;
-                }
-                else if (game.ui.option == Option.Quit)
-                {
-                    game.ui.option = Option.Load;
-                }
-                else if (game.ui.option == Option.Load)
-                {
-                    game.ui.option = Option.New;
-                }
-            }
-            else if (event.getKeyCode() == KeyEvent.VK_DOWN || event.getKeyCode() == event.VK_S)
-            {
-                if (game.ui.option == Option.New)
-                {
-                    game.ui.option = Option.Load;
-                }
-                else if (game.ui.option == Option.Load)
-                {
-                    game.ui.option = Option.Quit;
-                }
-                else if (game.ui.option == Option.Quit)
-                {
-                    game.ui.option = Option.New;
-                }
-            }
-            else if (event.getKeyCode() == KeyEvent.VK_ENTER)
-            {
-                switch (game.ui.option)
-                {
-                    case New :
-                    {
-                        game.state = State.Play;
-                        //game.playMusic(0);
-                        break;
-                    }
-                    case Load :
-                    {
-                        // this will be implemented after we implement saving the game
-                        break;
-                    }
-                    case Quit :
-                    {
-                        System.exit(0);
-                    }
-                }
-            }
+            Title(code);
         }
         else if (game.state == State.Play)
         {
-            switch (event.getKeyCode())
-            {
-                case KeyEvent.VK_LEFT :
-                case KeyEvent.VK_A :
-                {
-                    direction = Direction.Left; break;
-                }
-                case KeyEvent.VK_UP :
-                case KeyEvent.VK_W :
-                {
-                    direction = Direction.Up; break;
-                }
-                case KeyEvent.VK_RIGHT :
-                case KeyEvent.VK_D :
-                {
-                    direction = Direction.Right; break;
-                }
-                case KeyEvent.VK_DOWN :
-                case KeyEvent.VK_S :
-                {
-                    direction = Direction.Down; break;
-                }
-                case KeyEvent.VK_P :
-                {
-                    game.state = State.Pause; break;
-                }
-                case KeyEvent.VK_ENTER :
-                {
-                    enter_pressed = true;
-                }
-                case KeyEvent.VK_SPACE :
-                {
-                    space_pressed = true;
-                }
-            }
+            Play(code);
         }
         else if (game.state == State.Pause)
         {
-            if (event.getKeyCode() == KeyEvent.VK_P)
-            {
-                game.state = State.Play;
-            }
+            Pause(code);
         }
         else if (game.state == State.Dialoque)
         {
-            if (event.getKeyCode() == KeyEvent.VK_ENTER)
-            {
-                game.state = State.Play;
-            }
+            Dialoque(code);
+        }
+        else if (game.state == State.Status)
+        {
+            Status(code);
         }
     }
 
@@ -173,6 +88,128 @@ public class Control implements KeyListener
                     space_pressed = false; break;
                 }
             }
+        }
+    }
+
+    public void Title(int code)
+    {
+        if (code == KeyEvent.VK_UP || code == KeyEvent.VK_W)
+        {
+            if (game.ui.option == Option.New)
+            {
+                game.ui.option = Option.Quit;
+            }
+            else if (game.ui.option == Option.Quit)
+            {
+                game.ui.option = Option.Load;
+            }
+            else if (game.ui.option == Option.Load)
+            {
+                game.ui.option = Option.New;
+            }
+        }
+        else if (code == KeyEvent.VK_DOWN || code == KeyEvent.VK_S)
+        {
+            if (game.ui.option == Option.New)
+            {
+                game.ui.option = Option.Load;
+            }
+            else if (game.ui.option == Option.Load)
+            {
+                game.ui.option = Option.Quit;
+            }
+            else if (game.ui.option == Option.Quit)
+            {
+                game.ui.option = Option.New;
+            }
+        }
+        else if (code == KeyEvent.VK_ENTER)
+        {
+            switch (game.ui.option)
+            {
+                case New :
+                {
+                    game.state = State.Play;
+                    //game.playMusic(0);
+                    break;
+                }
+                case Load :
+                {
+                    // this will be implemented after we implement saving the game
+                    break;
+                }
+                case Quit :
+                {
+                    System.exit(0);
+                }
+            }
+        }
+    }
+
+    public void Play(int code)
+    {
+        switch (code)
+        {
+            case KeyEvent.VK_LEFT :
+            case KeyEvent.VK_A :
+            {
+                direction = Direction.Left; break;
+            }
+            case KeyEvent.VK_UP :
+            case KeyEvent.VK_W :
+            {
+                direction = Direction.Up; break;
+            }
+            case KeyEvent.VK_RIGHT :
+            case KeyEvent.VK_D :
+            {
+                direction = Direction.Right; break;
+            }
+            case KeyEvent.VK_DOWN :
+            case KeyEvent.VK_S :
+            {
+                direction = Direction.Down; break;
+            }
+            case KeyEvent.VK_P :
+            {
+                game.state = State.Pause; break;
+            }
+            case KeyEvent.VK_C :
+            {
+                game.state = State.Status; break;
+            }
+            case KeyEvent.VK_ENTER :
+            {
+                enter_pressed = true;
+            }
+            case KeyEvent.VK_SPACE :
+            {
+                space_pressed = true;
+            }
+        }
+    }
+
+    public void Pause(int code)
+    {
+        if (code == KeyEvent.VK_P)
+        {
+            game.state = State.Play;
+        }
+    }
+
+    public void Dialoque(int code)
+    {
+        if (code == KeyEvent.VK_ENTER)
+        {
+            game.state = State.Play;
+        }
+    }
+
+    public void Status(int code)
+    {
+        if (code == KeyEvent.VK_C)
+        {
+            game.state = State.Play;
         }
     }
 }

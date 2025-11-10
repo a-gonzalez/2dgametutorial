@@ -12,6 +12,7 @@ public class Player extends Entity
 {
     public final int screen_x;
     public final int screen_y;
+    public boolean attack_canceled = false;
     //public int keys = 0;
     private Control control;
 
@@ -37,10 +38,25 @@ public class Player extends Entity
         hitbox_default_y = hitbox.y;
         world_x = game.TILE_SIZE * 23;
         world_y = game.TILE_SIZE * 21;
-        speed = 4;
         direction = Direction.Down;
         life_max = 6;
         life = life_max;
+
+        // Player Status
+        speed = 4;
+        level = 1;
+        strength = 1; // the more strength, the more damage he gives
+        dexterity = 1; // the more dexteriry, the less damage he takes
+        experience = 0;
+        next_level_experience = 5;
+        coin = 0;
+        weapon = new BasicSword(game);
+        shield = new BasicShield(game);
+
+        // the total attack value is calculated by strength and weapon
+        attack = getAttack();
+        // the total defense value is calculated by dexterity and shield
+        defense = getDefense();
 
         setImages();
 
@@ -81,6 +97,16 @@ public class Player extends Entity
         attack_left1 = setup("/resources/image/player/attack_left1.png", size * 2, size);
     }
 
+    public int getAttack()
+    {
+        return attack = strength * weapon.attack_value;
+    }
+
+    public int getDefense()
+    {
+        return defense = dexterity * shield.defense_value;
+    }
+
     public void grabItem(int index)
     {
         if (index != 999)
@@ -90,21 +116,19 @@ public class Player extends Entity
 
     public void contactNPC(int index)
     {
-        if (index != 999)
+        if (game.control.enter_pressed == true)
         {
-            if (game.control.enter_pressed == true)
+            if (index != 999)
             {
+                attack_canceled = true;
                 game.state = State.Dialoque;
                 game.npc[index].speak();
             }
         }
-        else
+        else if (game.control.space_pressed == true)
         {
-            if (game.control.space_pressed == true)
-            {
-                //game.playSE(8);
-                attacking = true;
-            }
+            //game.playSE(8);
+            attacking = true;
         }
         /*if (game.control.enter_pressed == true)
         {
@@ -145,7 +169,7 @@ public class Player extends Entity
         {
             if (game.monsters[index].invincible == false)
             {
-                game.playSE(6);
+                //game.playSE(6);
                 game.monsters[index].life -= 1;
                 game.monsters[index].invincible = true;
                 game.monsters[index].damageReaction();
@@ -275,7 +299,15 @@ public class Player extends Entity
                     }
                 }
             }
-            //game.control.enter_pressed = false;
+
+            if (control.enter_pressed == true && attack_canceled == false)
+            {
+                attacking = true;
+                sprite_counter = 0;
+            }
+            attack_canceled = false;
+            game.control.enter_pressed = false;
+            game.control.space_pressed = false;
 
             sprite_counter++;
 

@@ -22,7 +22,7 @@ public class Skeleton extends Entity
     {
         type = Type.Monster;
         speed = 1;
-        life_max = 8;
+        life_max = 6;
         life = life_max;
         speed = 2;
         direction = Direction.Down;

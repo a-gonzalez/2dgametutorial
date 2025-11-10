@@ -22,7 +22,7 @@ public class Orc extends Entity
     {
         type = Type.Monster;
         speed = 1;
-        life_max = 8;
+        life_max = 4;
         life = life_max;
         speed = 1;
         direction = Direction.Down;

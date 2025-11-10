@@ -45,6 +45,20 @@ public abstract class Entity
     public int speed;
     public int life_max;
     public int life;
+    public int level;
+    public int strength;
+    public int dexterity;
+    public int attack;
+    public int defense;
+    public int experience;
+    public int next_level_experience;
+    public int coin;
+    public Entity weapon;
+    public Entity shield;
+
+    // Item attributes
+    public int attack_value;
+    public int defense_value;
 
     Game game;
 

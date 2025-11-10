@@ -55,6 +55,7 @@ public class Event
         if (game.control.enter_pressed)
         {
             game.state = State.Dialoque;
+            game.player.attack_canceled = true;
             
             if (game.player.life < game.player.life_max)
             {

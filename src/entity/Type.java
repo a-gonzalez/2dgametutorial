@@ -9,9 +9,8 @@ public enum Type
     ChestOpened,
     Boot,
     Heart,
-    Greenslime,
-    Redslime,
-    Bat,
+    Shield,
+    Sword,
     Monster,
     None
 }

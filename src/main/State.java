@@ -6,5 +6,6 @@ public enum State
     Pause,
     Dialoque,
     Title,
+    Status,
     Idle
 }

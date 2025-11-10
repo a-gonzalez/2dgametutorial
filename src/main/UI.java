@@ -113,6 +113,137 @@ public class UI
             drawPlayerLife();
             drawDialoqueScreen();
         }
+
+        if (game.state == State.Status)
+        {
+            drawPlayerLife();
+            drawStatusScreen();
+        }
+    }
+
+    public void drawStatusScreen()
+    {
+        final int x = game.TILE_SIZE;
+        final int y = game.TILE_SIZE;
+        final int width = game.TILE_SIZE * 5;
+        final int height = game.TILE_SIZE * 10;
+        final int lineHeight = 35;
+
+        drawSubWindow(x, y, width, height);
+
+        g2d.setColor(Color.WHITE);
+
+        int textX = x + 20;
+        int textY = y + game.TILE_SIZE;
+
+        g2d.drawString("Life", textX, textY);
+        textY += lineHeight;
+        g2d.drawString("Level", textX, textY);
+        textY += lineHeight;
+        g2d.drawString("Strength", textX, textY);
+        textY += lineHeight;
+        g2d.drawString("Dexterity", textX, textY);
+        textY += lineHeight;
+        g2d.drawString("Attack", textX, textY);
+        textY += lineHeight;
+        g2d.drawString("Defense", textX, textY);
+        textY += lineHeight;
+        g2d.drawString("Experience", textX, textY);
+        textY += lineHeight;
+        g2d.drawString("Next Level", textX, textY);
+        textY += lineHeight;
+        g2d.drawString("Coin", textX, textY);
+        textY += lineHeight + 20;
+        g2d.drawString("Weapon", textX, textY);
+        textY += lineHeight + 15;
+        g2d.drawString("Shield", textX, textY);
+
+        int rightX = (x + width) - 30;
+        textY = y + game.TILE_SIZE;
+        String value;
+
+        value = String.valueOf(game.player.life + " / " + game.player.life_max);
+        textX = getXToAlignTextRight(value, rightX);
+
+        g2d.drawString(value, textX, textY);
+
+        value = String.valueOf(game.player.level);
+        textY += lineHeight;
+        textX = getXToAlignTextRight(value, rightX);
+
+        g2d.drawString(value, textX, textY);
+
+        value = String.valueOf(game.player.strength);
+        textY += lineHeight;
+        textX = getXToAlignTextRight(value, rightX);
+
+        g2d.drawString(value, textX, textY);
+
+        value = String.valueOf(game.player.dexterity);
+        textY += lineHeight;
+        textX = getXToAlignTextRight(value, rightX);
+
+        g2d.drawString(value, textX, textY);
+
+        value = String.valueOf(game.player.attack);
+        textY += lineHeight;
+        textX = getXToAlignTextRight(value, rightX);
+
+        g2d.drawString(value, textX, textY);
+
+        value = String.valueOf(game.player.defense);
+        textY += lineHeight;
+        textX = getXToAlignTextRight(value, rightX);
+
+        g2d.drawString(value, textX, textY);
+
+        value = String.valueOf(game.player.experience);
+        textY += lineHeight;
+        textX = getXToAlignTextRight(value, rightX);
+
+        g2d.drawString(value, textX, textY);
+
+        value = String.valueOf(game.player.next_level_experience);
+        textY += lineHeight;
+        textX = getXToAlignTextRight(value, rightX);
+
+        g2d.drawString(value, textX, textY);
+
+        value = String.valueOf(game.player.coin);
+        textY += lineHeight;
+        textX = getXToAlignTextRight(value, rightX);
+
+        g2d.drawString(value, textX, textY);
+
+        textY += lineHeight;
+
+        g2d.drawImage(game.player.weapon.down0, rightX - game.TILE_SIZE, textY - 14, null);
+
+        textY += game.TILE_SIZE;
+
+        g2d.drawImage(game.player.shield.down0, rightX - game.TILE_SIZE, textY - 14, null);
+
+        /*g2d.drawString(String.format("Life: %20d", 0), textX, textY);
+        textY += lineHeight;
+        g2d.drawString(String.format("Level: %16d", 0), textX, textY);
+        textY += lineHeight;
+        g2d.drawString(String.format("Strength: %10d", 0), textX, textY);
+        textY += lineHeight;
+        g2d.drawString(String.format("Dexterity: %10d", 0), textX, textY);
+        textY += lineHeight;
+        g2d.drawString(String.format("Attack: %-10d", 0), textX, textY);
+        textY += lineHeight;
+        g2d.drawString(String.format("Defense: %-10d", 0), textX, textY);
+        textY += lineHeight;
+        g2d.drawString(String.format("Experience: %10d", 0), textX, textY);
+        textY += lineHeight;
+        g2d.drawString(String.format("Next Level: %5d", 0), textX, textY);
+        textY += lineHeight;
+        g2d.drawString(String.format("Coin: %-10d", 0), textX, textY);
+        textY += lineHeight;
+        g2d.drawString(String.format("Weapon: %-10d", 0), textX, textY);
+        textY += lineHeight;
+        g2d.drawString(String.format("Shield: %-10d", 0), textX, textY);*/
     }
 
     public void drawPlayerLife()
@@ -250,6 +381,14 @@ public class UI
     {
         int length = (int) g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
         int x = game.SCREEN_WIDTH / 2 - length / 2;
+
+        return x;
+    }
+
+    private int getXToAlignTextRight(String text, int rightX)
+    {
+        int length = (int) g2d.getFontMetrics().getStringBounds(text, g2d).getWidth();
+        int x = rightX - length;
 
         return x;
     }
