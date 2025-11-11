@@ -25,6 +25,9 @@ public class Skeleton extends Entity
         life_max = 6;
         life = life_max;
         speed = 2;
+        attack = 4;
+        defense = 1;
+        experience = 4;
         direction = Direction.Down;
 
         hitbox.x = 10;

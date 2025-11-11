@@ -20,6 +20,9 @@ public class Redslime extends Entity
         speed = 1;
         life_max = 4;
         life = life_max;
+        attack = 3;
+        defense = 0;
+        experience = 2;
 
         hitbox.x = 3;
         hitbox.y = 18;

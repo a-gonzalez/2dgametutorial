@@ -157,7 +157,14 @@ public class Player extends Entity
             if (invincible == false)
             {
                 game.playSE(7);
-                --life;
+
+                int damage = game.monsters[index].attack - defense;
+
+                if (damage < 0)
+                {
+                    damage = 0;
+                }
+                life -= damage;
                 invincible = true;
             }
         }
@@ -170,15 +177,50 @@ public class Player extends Entity
             if (game.monsters[index].invincible == false)
             {
                 //game.playSE(6);
-                game.monsters[index].life -= 1;
+                int damage = attack - game.monsters[index].defense;
+
+                if (damage < 0)
+                {
+                    damage = 0;
+                }
+                game.monsters[index].life -= damage;
                 game.monsters[index].invincible = true;
                 game.monsters[index].damageReaction();
+
+                game.ui.addMessage(String.format("%d damage!", damage));
 
                 if (game.monsters[index].life <= 0)
                 {
                     game.monsters[index].dying = true;
+                    game.ui.addMessage(String.format("Killed the %s", game.monsters[index].getClass().getSimpleName()));
+                    game.ui.addMessage(String.format("Experience + %d", game.monsters[index].experience));
+
+                    experience += game.monsters[index].experience;
+
+                    checkLevelUp();
                 }
             }
+        }
+    }
+
+    public void checkLevelUp()
+    {
+        if (experience >= next_level_experience)
+        {
+            ++level;
+            next_level_experience = next_level_experience * 2;
+
+            life_max += 2;
+            ++strength;
+            ++dexterity;
+
+            attack = getAttack();
+            defense = getDefense();
+
+            game.playSE(9);
+
+            game.state = State.Dialoque;
+            game.ui.dialoque = String.format("You are level %d now. Attributes have increased.", level);
         }
     }
 

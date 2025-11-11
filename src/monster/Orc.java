@@ -25,6 +25,9 @@ public class Orc extends Entity
         life_max = 4;
         life = life_max;
         speed = 1;
+        attack = 3;
+        defense = 1;
+        experience = 3;
         direction = Direction.Down;
 
         hitbox.x = 0;

@@ -20,6 +20,9 @@ public class Greenslime extends Entity
         speed = 1;
         life_max = 4;
         life = life_max;
+        attack = 2;
+        defense = 0;
+        experience = 1;
 
         hitbox.x = 3;
         hitbox.y = 18;

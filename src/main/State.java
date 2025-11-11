@@ -7,5 +7,6 @@ public enum State
     Dialoque,
     Title,
     Status,
+    Invetory,
     Idle
 }

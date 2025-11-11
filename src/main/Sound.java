@@ -28,6 +28,7 @@ public class Sound
         url[6] = getClass().getResource("/resources/audio/hitmonster.wav");
         url[7] = getClass().getResource("/resources/audio/receivedamage.wav");
         url[8] = getClass().getResource("/resources/audio/parry.wav");
+        url[9] = getClass().getResource("/resources/audio/levelup.wav");
     } // TODO: use some sort of enum instead of number
 
     public void play()

@@ -20,6 +20,9 @@ public class Bat extends Entity
         speed = 1;
         life_max = 2;
         life = life_max;
+        attack = 3;
+        defense = 0;
+        experience = 1;
 
         hitbox.x = 4;
         hitbox.y = 14;

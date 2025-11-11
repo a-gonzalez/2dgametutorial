@@ -189,8 +189,14 @@ public abstract class Entity
         if (contact == true && this.type == Type.Monster)
         { // if a monster hits player and player is not invincible give damage
             if (game.player.invincible == false)
-            {
-                game.player.life--;
+            {// we need to add SE when monster bumps player
+                int damage = attack - game.player.defense;
+
+                if (damage < 0)
+                {
+                    damage = 0;
+                }
+                game.player.life -= damage;
                 game.player.invincible = true;
             }
         }

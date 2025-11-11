@@ -8,6 +8,7 @@ import java.awt.Font;
 //import java.awt.FontFormatException;
 import java.awt.BasicStroke;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import unus.entity.*;
 
@@ -19,9 +20,11 @@ public class UI
     Option option = Option.New;
     Font Papyrus_25P;
     //int message_counter = 0;
+    //public String message = "";
+    ArrayList<String> messages = new ArrayList<String>();
+    ArrayList<Integer> counters = new ArrayList<Integer>();
     public boolean game_complete = false;
     public boolean show_message = false;
-    //public String message = "";
     public String dialoque = "";
 
     //Font pixel_zone, super_pixel;
@@ -62,11 +65,11 @@ public class UI
         heart_empty = heart.image2;
     }
 
-    /*public void displayMessage(String message)
+    public void addMessage(String message)
     {
-        this.message = message;
-        this.show_message = true;
-    }*/
+        messages.add(message);
+        counters.add(0);
+    }
 
     public void draw(Graphics2D g2d)
     {
@@ -83,23 +86,7 @@ public class UI
         if (game.state == State.Play)
         {
             drawPlayerLife();
-
-            /*if (show_message)
-            {
-                int length = (int) g2d.getFontMetrics().getStringBounds(message, g2d).getWidth();
-                int x = (game.SCREEN_WIDTH / 2) - (length / 2);
-                int y = (game.SCREEN_HEIGHT / 2) - game.TILE_SIZE;
-
-                g2d.drawString(message, x, y);
-
-                ++message_counter;
-
-                if (message_counter > 120)
-                {
-                    show_message = false;
-                    message_counter = 0;
-                }
-            }*/
+            drawMessage();
         }
         
         if (game.state == State.Pause)
@@ -118,6 +105,36 @@ public class UI
         {
             drawPlayerLife();
             drawStatusScreen();
+        }
+    }
+
+    public void drawMessage()
+    {
+        int x = game.TILE_SIZE;
+        int y = game.TILE_SIZE * 2;
+
+        g2d.setFont(g2d.getFont().deriveFont(Font.BOLD));
+
+        for (int index = 0; index < messages.size(); index++)
+        {
+            if (messages.get(index) != null)
+            {
+                g2d.setColor(Color.BLACK);
+                g2d.drawString(messages.get(index), x, y);
+                g2d.setColor(Color.WHITE);
+                g2d.drawString(messages.get(index), x + 2, y + 2);
+
+                int increment = counters.get(index) + 1;
+                counters.set(index, increment);
+
+                y += 35;
+
+                if (counters.get(index) > 180)
+                {
+                    messages.remove(index);
+                    counters.remove(index);
+                }
+            }
         }
     }
 
