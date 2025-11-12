@@ -17,7 +17,7 @@ public class Sound
 
     private void initialize()
     {
-        url = new URL[10];
+        url = new URL[15];
 
         url[0] = getClass().getResource("/resources/audio/theme.wav");
         url[1] = getClass().getResource("/resources/audio/coin.wav");
@@ -29,6 +29,7 @@ public class Sound
         url[7] = getClass().getResource("/resources/audio/receivedamage.wav");
         url[8] = getClass().getResource("/resources/audio/parry.wav");
         url[9] = getClass().getResource("/resources/audio/levelup.wav");
+        url[10] = getClass().getResource("/resources/audio/cursor.wav");
     } // TODO: use some sort of enum instead of number
 
     public void play()

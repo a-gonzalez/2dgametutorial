@@ -59,8 +59,9 @@ public abstract class Entity
     // Item attributes
     public int attack_value;
     public int defense_value;
+    public String description = "";
 
-    Game game;
+    public Game game;
 
     public Entity(Game game)
     {

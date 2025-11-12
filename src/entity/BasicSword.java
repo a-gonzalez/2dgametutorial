@@ -11,5 +11,6 @@ public class BasicSword extends Entity
         type = Type.Sword;
         attack_value = 2;
         down0 = setup("/resources/image/item/basic_sword.png");
+        description = String.format("[%s]\nAn ordinary basic sword.", getClass().getSimpleName());
     }
 }

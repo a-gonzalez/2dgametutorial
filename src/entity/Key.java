@@ -10,5 +10,6 @@ public class Key extends Entity
 
         type = Type.Key;
         down0 = setup("/resources/image/item/key.png");
+        description = String.format("[%s]\nUsed to open locked doors.", getClass().getSimpleName());
     }
 }

@@ -5,11 +5,14 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.awt.Rectangle;
 import java.awt.AlphaComposite;
+import java.util.ArrayList;
 
 import unus.main.*;
 
 public class Player extends Entity
 {
+    public ArrayList<Entity> inventory = new ArrayList<Entity>();
+    //public final int invetory_size = 20;
     public final int screen_x;
     public final int screen_y;
     public boolean attack_canceled = false;
@@ -59,6 +62,7 @@ public class Player extends Entity
         defense = getDefense();
 
         setImages();
+        setInventory();
 
         // increasing these number increases attack range (for cheating or different weapon types)
         attack_hitbox.width = 36;
@@ -69,6 +73,23 @@ public class Player extends Entity
     {
         getWalkingImages();
         getAttackImages();
+    }
+
+    private void setInventory()
+    {
+        inventory.add(weapon);
+        inventory.add(shield);
+        inventory.add(new Key(game));
+        inventory.add(new Key(game));
+        inventory.add(new Lantern(game));
+        inventory.add(new Key(game));
+        inventory.add(new Coin(game));
+        inventory.add(new Coin(game));
+        inventory.add(new BlueShield(game));
+        inventory.add(new Pick(game));
+        inventory.add(new Axe(game));
+        inventory.add(new RedPotion(game));
+        inventory.add(new Boot(game));
     }
 
     private void getWalkingImages()
@@ -85,16 +106,14 @@ public class Player extends Entity
 
     private void getAttackImages()
     {
-        int size = 48;
-
-        attack_up0 = setup("/resources/image/player/attack_up0.png", size, size * 2);
-        attack_up1 = setup("/resources/image/player/attack_up1.png", size, size * 2);
-        attack_down0 = setup("/resources/image/player/attack_down0.png", size, size * 2);
-        attack_down1 = setup("/resources/image/player/attack_down1.png", size, size * 2);
-        attack_right0 = setup("/resources/image/player/attack_right0.png", size * 2, size);
-        attack_right1 = setup("/resources/image/player/attack_right1.png", size * 2, size);
-        attack_left0 = setup("/resources/image/player/attack_left0.png", size * 2, size);
-        attack_left1 = setup("/resources/image/player/attack_left1.png", size * 2, size);
+        attack_up0 = setup("/resources/image/player/attack_up0.png", game.TILE_SIZE, game.TILE_SIZE * 2);
+        attack_up1 = setup("/resources/image/player/attack_up1.png", game.TILE_SIZE, game.TILE_SIZE * 2);
+        attack_down0 = setup("/resources/image/player/attack_down0.png", game.TILE_SIZE, game.TILE_SIZE * 2);
+        attack_down1 = setup("/resources/image/player/attack_down1.png", game.TILE_SIZE, game.TILE_SIZE * 2);
+        attack_right0 = setup("/resources/image/player/attack_right0.png", game.TILE_SIZE * 2, game.TILE_SIZE);
+        attack_right1 = setup("/resources/image/player/attack_right1.png", game.TILE_SIZE * 2, game.TILE_SIZE);
+        attack_left0 = setup("/resources/image/player/attack_left0.png", game.TILE_SIZE * 2, game.TILE_SIZE);
+        attack_left1 = setup("/resources/image/player/attack_left1.png", game.TILE_SIZE * 2, game.TILE_SIZE);
     }
 
     public int getAttack()
@@ -187,12 +206,12 @@ public class Player extends Entity
                 game.monsters[index].invincible = true;
                 game.monsters[index].damageReaction();
 
-                game.ui.addMessage(String.format("%d damage!", damage));
+                game.ui.addMessage(String.format("%d damage to %s!", damage, game.monsters[index].getClass().getSimpleName()));
 
                 if (game.monsters[index].life <= 0)
                 {
                     game.monsters[index].dying = true;
-                    game.ui.addMessage(String.format("Killed the %s", game.monsters[index].getClass().getSimpleName()));
+                    game.ui.addMessage(String.format("You killed the %s", game.monsters[index].getClass().getSimpleName()));
                     game.ui.addMessage(String.format("Experience + %d", game.monsters[index].experience));
 
                     experience += game.monsters[index].experience;
@@ -220,7 +239,7 @@ public class Player extends Entity
             game.playSE(9);
 
             game.state = State.Dialoque;
-            game.ui.dialoque = String.format("You are level %d now. Attributes have increased.", level);
+            game.ui.dialoque = String.format("You are level %d now.\nLife and attributes have increased.", level);
         }
     }
 

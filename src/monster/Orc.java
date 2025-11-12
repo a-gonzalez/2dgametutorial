@@ -97,15 +97,13 @@ public class Orc extends Entity
 
     private void getAttackImages()
     {
-        int size = 48;
-
-        attack_down0 = setup("/resources/image/monster/orc/attack_down0.png", size, size * 2);
-        attack_down1 = setup("/resources/image/monster/orc/attack_down1.png", size, size * 2);
-        attack_up0 = setup("/resources/image/monster/orc/attack_up0.png", size, size * 2);
-        attack_up1 = setup("/resources/image/monster/orc/attack_up1.png", size, size * 2);
-        attack_left0 = setup("/resources/image/monster/orc/attack_left0.png", size * 2, size);
-        attack_left1 = setup("/resources/image/monster/orc/attack_left1.png", size * 2, size);
-        attack_right0 = setup("/resources/image/monster/orc/attack_right0.png", size * 2, size);
-        attack_right1 = setup("/resources/image/monster/orc/attack_right1.png", size * 2, size);
+        attack_down0 = setup("/resources/image/monster/orc/attack_down0.png", game.TILE_SIZE, game.TILE_SIZE * 2);
+        attack_down1 = setup("/resources/image/monster/orc/attack_down1.png", game.TILE_SIZE, game.TILE_SIZE * 2);
+        attack_up0 = setup("/resources/image/monster/orc/attack_up0.png", game.TILE_SIZE, game.TILE_SIZE * 2);
+        attack_up1 = setup("/resources/image/monster/orc/attack_up1.png", game.TILE_SIZE, game.TILE_SIZE * 2);
+        attack_left0 = setup("/resources/image/monster/orc/attack_left0.png", game.TILE_SIZE * 2, game.TILE_SIZE);
+        attack_left1 = setup("/resources/image/monster/orc/attack_left1.png", game.TILE_SIZE * 2, game.TILE_SIZE);
+        attack_right0 = setup("/resources/image/monster/orc/attack_right0.png", game.TILE_SIZE * 2, game.TILE_SIZE);
+        attack_right1 = setup("/resources/image/monster/orc/attack_right1.png", game.TILE_SIZE * 2, game.TILE_SIZE);
     }
 }

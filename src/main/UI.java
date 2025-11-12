@@ -26,6 +26,8 @@ public class UI
     public boolean game_complete = false;
     public boolean show_message = false;
     public String dialoque = "";
+    public int slot_column = 0;
+    public int slot_row = 0;
 
     //Font pixel_zone, super_pixel;
 
@@ -105,6 +107,7 @@ public class UI
         {
             drawPlayerLife();
             drawStatusScreen();
+            drawInventoryScreen();
         }
     }
 
@@ -136,6 +139,75 @@ public class UI
                 }
             }
         }
+    }
+
+    public void drawInventoryScreen()
+    { // frame
+        final int x = game.TILE_SIZE * 9;
+        final int y = game.TILE_SIZE;
+        final int width = game.TILE_SIZE * 6;
+        final int height = game.TILE_SIZE * 5;
+
+        drawSubWindow(x, y, width, height);
+
+        // slot
+        final int slot_x_start = x + 20;
+        final int slot_y_start = y + 20;
+        int slot_x = slot_x_start;
+        int slot_y = slot_y_start;
+        int slot_size = game.TILE_SIZE + 3;
+
+        // player inventory
+        for (int index = 0; index < game.player.inventory.size(); index++)
+        {
+            g2d.drawImage(game.player.inventory.get(index).down0, slot_x, slot_y, null);
+
+            slot_x += slot_size;
+
+            if (index == 4 || index == 9 || index == 14)
+            {
+                slot_x = slot_x_start;
+                slot_y += slot_size;
+            }
+        }
+
+        // cursor
+        int cursor_x = slot_x_start + (slot_size * slot_column);
+        int cursor_y = slot_y_start + (slot_size * slot_row);
+        int cursor_width = game.TILE_SIZE;
+        int cursor_height = game.TILE_SIZE;
+
+        g2d.setStroke(new BasicStroke(2));
+        g2d.drawRoundRect(cursor_x, cursor_y, cursor_width, cursor_height, 10, 10);
+
+        int dx = x;
+        int dy = y + height;
+        int dwidth = width;
+        int dheight = game.TILE_SIZE * 3;
+
+        drawSubWindow(dx, dy, dwidth, dheight);
+
+        int textX = dx + 20;
+        int textY = dy + game.TILE_SIZE;
+        int index = getItemSlotIndex();
+
+        if (index < game.player.inventory.size())
+        {
+            g2d.setFont(g2d.getFont().deriveFont(20f));
+
+            for (String line : game.player.inventory.get(index).description.split("\n"))
+            {
+                g2d.drawString(line, textX, textY);
+                textY += 30;
+            }
+        }
+    }
+
+    private int getItemSlotIndex()
+    {
+        int index = slot_column + (slot_row * 5);
+
+        return index;
     }
 
     public void drawStatusScreen()

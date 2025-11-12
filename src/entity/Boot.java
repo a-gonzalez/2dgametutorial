@@ -10,5 +10,6 @@ public class Boot extends Entity
 
         this.type = Type.Boot;
         this.down0 = setup("/resources/image/item/boot.png");
+        description = String.format("[%s]\nSpeed boost.", getClass().getSimpleName());
     }
 }

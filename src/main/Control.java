@@ -207,9 +207,52 @@ public class Control implements KeyListener
 
     public void Status(int code)
     {
-        if (code == KeyEvent.VK_C)
+        switch (code)
         {
-            game.state = State.Play;
+            case KeyEvent.VK_C :
+            {
+                game.state = State.Play;
+            }
+            case KeyEvent.VK_UP :
+            case KeyEvent.VK_W :
+            {
+                if (game.ui.slot_row != 0)
+                {
+                    --game.ui.slot_row;
+                    game.playSE(10);
+                }
+                break;
+            }
+            case KeyEvent.VK_LEFT :
+            case KeyEvent.VK_A :
+            {
+                if (game.ui.slot_column != 0)
+                {
+                    --game.ui.slot_column;
+                    game.playSE(10);
+                }
+                break;
+            }
+            case KeyEvent.VK_DOWN :
+            case KeyEvent.VK_S :
+            {
+                if (game.ui.slot_row != 3)
+                {
+                    ++game.ui.slot_row;
+                    game.playSE(10);
+                }
+                break;
+            }
+            case KeyEvent.VK_RIGHT :
+            case KeyEvent.VK_D :
+            {
+                if (game.ui.slot_column != 4)
+                {
+                    ++game.ui.slot_column;
+                    game.playSE(10);
+                }
+                break;
+            }
         }
     }
 }

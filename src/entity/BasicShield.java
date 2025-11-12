@@ -11,5 +11,6 @@ public class BasicShield extends Entity
         type = Type.Shield;
         defense_value = 1;
         down0 = setup("/resources/image/item/basic_shield.png");
+        description = String.format("[%s]\nAn ordinary basic shield.", getClass().getSimpleName());
     }
 }
