@@ -2,15 +2,11 @@ package unus.entity;
 
 public enum Type
 {
-    Key,
-    Coin,
+    Item,
     Door,
-    IronDoor,
     Chest,
     ChestOpened,
-    Boot,
     Heart,
-    Potion,
     Pick,
     Axe,
     Lantern,

@@ -160,6 +160,12 @@ public class UI
         // player inventory
         for (int index = 0; index < game.player.inventory.size(); index++)
         {
+            if (game.player.inventory.get(index) == game.player.weapon || game.player.inventory.get(index) == game.player.shield)
+            {
+                g2d.setColor(new Color(240, 190, 90));
+                g2d.fillRoundRect(slot_x, slot_y, game.TILE_SIZE, game.TILE_SIZE, 10, 10);
+            }
+
             g2d.drawImage(game.player.inventory.get(index).down0, slot_x, slot_y, null);
 
             slot_x += slot_size;
@@ -184,9 +190,6 @@ public class UI
         int dy = y + height;
         int dwidth = width;
         int dheight = game.TILE_SIZE * 3;
-
-        drawSubWindow(dx, dy, dwidth, dheight);
-
         int textX = dx + 20;
         int textY = dy + game.TILE_SIZE;
         int index = getItemSlotIndex();
@@ -194,6 +197,7 @@ public class UI
         if (index < game.player.inventory.size())
         {
             g2d.setFont(g2d.getFont().deriveFont(20f));
+            drawSubWindow(dx, dy, dwidth, dheight);
 
             for (String line : game.player.inventory.get(index).description.split("\n"))
             {
@@ -203,7 +207,7 @@ public class UI
         }
     }
 
-    private int getItemSlotIndex()
+    public int getItemSlotIndex()
     {
         int index = slot_column + (slot_row * 5);
 

@@ -12,7 +12,7 @@ import unus.main.*;
 public class Player extends Entity
 {
     public ArrayList<Entity> inventory = new ArrayList<Entity>();
-    //public final int invetory_size = 20;
+    public final int invetory_size_max = 20;
     public final int screen_x;
     public final int screen_y;
     public boolean attack_canceled = false;
@@ -53,8 +53,8 @@ public class Player extends Entity
         experience = 0;
         next_level_experience = 5;
         coin = 0;
-        weapon = new BasicSword(game);
-        shield = new BasicShield(game);
+        weapon = new Sword(game);
+        shield = new Shield(game);
 
         // the total attack value is calculated by strength and weapon
         attack = getAttack();
@@ -65,8 +65,8 @@ public class Player extends Entity
         setInventory();
 
         // increasing these number increases attack range (for cheating or different weapon types)
-        attack_hitbox.width = 36;
-        attack_hitbox.height = 36;
+        //attack_hitbox.width = 36;
+        //attack_hitbox.height = 36;
     }
 
     private void setImages()
@@ -79,7 +79,7 @@ public class Player extends Entity
     {
         inventory.add(weapon);
         inventory.add(shield);
-        inventory.add(new Key(game));
+        /*inventory.add(new Key(game));
         inventory.add(new Key(game));
         inventory.add(new Lantern(game));
         inventory.add(new Key(game));
@@ -89,7 +89,7 @@ public class Player extends Entity
         inventory.add(new Pick(game));
         inventory.add(new Axe(game));
         inventory.add(new RedPotion(game));
-        inventory.add(new Boot(game));
+        inventory.add(new Boot(game));*/
     }
 
     private void getWalkingImages()
@@ -106,18 +106,51 @@ public class Player extends Entity
 
     private void getAttackImages()
     {
-        attack_up0 = setup("/resources/image/player/attack_up0.png", game.TILE_SIZE, game.TILE_SIZE * 2);
-        attack_up1 = setup("/resources/image/player/attack_up1.png", game.TILE_SIZE, game.TILE_SIZE * 2);
-        attack_down0 = setup("/resources/image/player/attack_down0.png", game.TILE_SIZE, game.TILE_SIZE * 2);
-        attack_down1 = setup("/resources/image/player/attack_down1.png", game.TILE_SIZE, game.TILE_SIZE * 2);
-        attack_right0 = setup("/resources/image/player/attack_right0.png", game.TILE_SIZE * 2, game.TILE_SIZE);
-        attack_right1 = setup("/resources/image/player/attack_right1.png", game.TILE_SIZE * 2, game.TILE_SIZE);
-        attack_left0 = setup("/resources/image/player/attack_left0.png", game.TILE_SIZE * 2, game.TILE_SIZE);
-        attack_left1 = setup("/resources/image/player/attack_left1.png", game.TILE_SIZE * 2, game.TILE_SIZE);
+        switch (weapon.type)
+        {
+            case Sword :
+            {
+                attack_up0 = setup("/resources/image/player/sword_up0.png", game.TILE_SIZE, game.TILE_SIZE * 2);
+                attack_up1 = setup("/resources/image/player/sword_up1.png", game.TILE_SIZE, game.TILE_SIZE * 2);
+                attack_down0 = setup("/resources/image/player/sword_down0.png", game.TILE_SIZE, game.TILE_SIZE * 2);
+                attack_down1 = setup("/resources/image/player/sword_down1.png", game.TILE_SIZE, game.TILE_SIZE * 2);
+                attack_right0 = setup("/resources/image/player/sword_right0.png", game.TILE_SIZE * 2, game.TILE_SIZE);
+                attack_right1 = setup("/resources/image/player/sword_right1.png", game.TILE_SIZE * 2, game.TILE_SIZE);
+                attack_left0 = setup("/resources/image/player/sword_left0.png", game.TILE_SIZE * 2, game.TILE_SIZE);
+                attack_left1 = setup("/resources/image/player/sword_left1.png", game.TILE_SIZE * 2, game.TILE_SIZE);
+                break;
+            }
+            case Axe :
+            {
+                attack_up0 = setup("/resources/image/player/axe_up0.png", game.TILE_SIZE, game.TILE_SIZE * 2);
+                attack_up1 = setup("/resources/image/player/axe_up1.png", game.TILE_SIZE, game.TILE_SIZE * 2);
+                attack_down0 = setup("/resources/image/player/axe_down0.png", game.TILE_SIZE, game.TILE_SIZE * 2);
+                attack_down1 = setup("/resources/image/player/axe_down1.png", game.TILE_SIZE, game.TILE_SIZE * 2);
+                attack_right0 = setup("/resources/image/player/axe_right0.png", game.TILE_SIZE * 2, game.TILE_SIZE);
+                attack_right1 = setup("/resources/image/player/axe_right1.png", game.TILE_SIZE * 2, game.TILE_SIZE);
+                attack_left0 = setup("/resources/image/player/axe_left0.png", game.TILE_SIZE * 2, game.TILE_SIZE);
+                attack_left1 = setup("/resources/image/player/axe_left1.png", game.TILE_SIZE * 2, game.TILE_SIZE);
+                break;
+            }
+            case Pick :
+            {
+                attack_up0 = setup("/resources/image/player/pick_up0.png", game.TILE_SIZE, game.TILE_SIZE * 2);
+                attack_up1 = setup("/resources/image/player/pick_up1.png", game.TILE_SIZE, game.TILE_SIZE * 2);
+                attack_down0 = setup("/resources/image/player/pick_down0.png", game.TILE_SIZE, game.TILE_SIZE * 2);
+                attack_down1 = setup("/resources/image/player/pick_down1.png", game.TILE_SIZE, game.TILE_SIZE * 2);
+                attack_right0 = setup("/resources/image/player/pick_right0.png", game.TILE_SIZE * 2, game.TILE_SIZE);
+                attack_right1 = setup("/resources/image/player/pick_right1.png", game.TILE_SIZE * 2, game.TILE_SIZE);
+                attack_left0 = setup("/resources/image/player/pick_left0.png", game.TILE_SIZE * 2, game.TILE_SIZE);
+                attack_left1 = setup("/resources/image/player/pick_left1.png", game.TILE_SIZE * 2, game.TILE_SIZE);
+                break;
+            }
+        }
     }
 
     public int getAttack()
     {
+        attack_hitbox = weapon.attack_hitbox;
+
         return attack = strength * weapon.attack_value;
     }
 
@@ -130,6 +163,28 @@ public class Player extends Entity
     {
         if (index != 999)
         {
+            String text = "";
+
+            if (inventory.size() != invetory_size_max)
+            {
+                Entity item = game.items[index];
+
+                //System.out.println(item.type);
+
+                if (item.type == Type.Item || item.type == Type.Sword || item.type == Type.Axe || item.type == Type.Pick || item.type == Type.Shield)
+                {
+                    inventory.add(item);
+                    game.playSE(1);
+
+                    text = String.format("%s added to invetory.", game.items[index].getClass().getSimpleName());
+                }
+            }
+            else
+            {
+                text = "Your inventory is full.";
+            }
+            game.ui.addMessage(text);
+            game.items[index] = null;
         }
     }
 
@@ -301,6 +356,36 @@ public class Player extends Entity
             sprite_number = 0;
             sprite_counter = 0;
             attacking = false;
+        }
+    }
+
+    public void selectItem()
+    {
+        int index = game.ui.getItemSlotIndex();
+
+        if (index < inventory.size())
+        {
+            Entity selected = inventory.get(index);
+
+            if (selected.type == Type.Sword || selected.type == Type.Axe || selected.type == Type.Pick)
+            {
+                weapon = selected;
+                attack = getAttack();
+                getAttackImages();
+            }
+
+            if (selected.type == Type.Shield)
+            {
+                shield = selected;
+                defense = getDefense();
+            }
+
+            if (selected.type == Type.Item)
+            {
+                selected.use(this);
+
+                inventory.remove(index);
+            }
         }
     }
 

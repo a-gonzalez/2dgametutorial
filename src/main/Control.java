@@ -253,6 +253,10 @@ public class Control implements KeyListener
                 }
                 break;
             }
+            case KeyEvent.VK_ENTER :
+            {
+                game.player.selectItem(); break;
+            }
         }
     }
 }

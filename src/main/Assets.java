@@ -18,9 +18,33 @@ public class Assets
         game.items[0].world_x = game.TILE_SIZE * 12;
         game.items[0].world_y = game.TILE_SIZE * 8;
 
-        game.items[1] = new IronDoor(game);
+        game.items[1] = new MetalDoor(game);
         game.items[1].world_x = game.TILE_SIZE * 12;
         game.items[1].world_y = game.TILE_SIZE * 12;
+
+        game.items[2] = new Key(game);
+        game.items[2].world_x = game.TILE_SIZE * 25;
+        game.items[2].world_y = game.TILE_SIZE * 23;
+
+        game.items[4] = new Coin(game);
+        game.items[4].world_x = game.TILE_SIZE * 25;
+        game.items[4].world_y = game.TILE_SIZE * 19;
+
+        game.items[5] = new Axe(game);
+        game.items[5].world_x = game.TILE_SIZE * 21;
+        game.items[5].world_y = game.TILE_SIZE * 19;
+
+        game.items[6] = new Pick(game);
+        game.items[6].world_x = game.TILE_SIZE * 36;
+        game.items[6].world_y = game.TILE_SIZE * 10;
+
+        game.items[7] = new MetalShield(game);
+        game.items[7].world_x = game.TILE_SIZE * 13;
+        game.items[7].world_y = game.TILE_SIZE * 30;
+
+        game.items[8] = new RedPotion(game);
+        game.items[8].world_x = game.TILE_SIZE * 21;
+        game.items[8].world_y = game.TILE_SIZE * 23;
     }
 
     public void setNPCs()

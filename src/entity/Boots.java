@@ -2,14 +2,14 @@ package unus.entity;
 
 import unus.main.Game;
 
-public class Boot extends Entity
+public class Boots extends Entity
 {
-    public Boot(Game game)
+    public Boots(Game game)
     {
         super(game);
 
-        this.type = Type.Boot;
-        this.down0 = setup("/resources/image/item/boot.png");
+        type = Type.Item;
+        down0 = setup("/resources/image/item/boot.png");
         description = String.format("[%s]\nSpeed boost.", getClass().getSimpleName());
     }
 }

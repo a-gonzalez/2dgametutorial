@@ -8,8 +8,8 @@ public class Coin extends Entity
     {
         super(game);
 
-        type = Type.Coin;
-        down0 = setup("/resources/image/item/coin_bronze.png");
+        type = Type.Item;
+        down0 = setup("/resources/image/item/bronze_coin.png");
         description = String.format("[%s]\nGame currency.", getClass().getSimpleName());
     }
 }

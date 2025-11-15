@@ -77,8 +77,10 @@ public abstract class Entity
     }
 
     public void setAction()
-    {
-    }
+    {}
+
+    public void use(Entity entity)
+    {}
 
     public void damageReaction()
     {
